@@ -185,8 +185,10 @@ int main(int argc, const char * argv[]) {
     int64_t o2RatingNum = strtoul(o2Rating.c_str(), nullptr, 2);
     int64_t co2RatingNum = strtoul(co2Rating.c_str(), nullptr, 2);
 
-    cout << format("o2RatingNum, co2RatingNum -> {},{}", o2RatingNum, co2RatingNum) << endl;
-    cout << format("The product of o2RatingNum and co2RatingNum is {}", o2RatingNum * co2RatingNum) << endl;
+    cout << format("o2RatingNum, co2RatingNum -> {},{}",
+                   o2RatingNum, co2RatingNum) << endl;
+    cout << format("The product of o2RatingNum and co2RatingNum is {}",
+                   o2RatingNum * co2RatingNum) << endl;
 
     return EXIT_SUCCESS;
 }
