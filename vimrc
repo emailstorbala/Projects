@@ -10,6 +10,9 @@ set splitbelow
 set noswapfile
 let NERDTreeShowHidden=1
 
+let g:indentLine_enabled = 1
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
@@ -20,6 +23,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'dense-analysis/ale'
 Plug 'preservim/nerdtree'
 Plug 'davidhalter/jedi-vim'
+Plug 'Yggdroot/indentLine'
 call plug#end()
 
 set ruler
