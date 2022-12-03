@@ -1,3 +1,4 @@
+/* Copyright [2022-2023] Balamurugan R<emailstorbala@gmail.com> */
 #include <iostream>
 #include <algorithm>
 #include <chrono>
@@ -76,8 +77,8 @@ vector <std::pair<char, char>> ReadInputFile(const char * inpfile) {
         }
         myfile.close();
     } else {
-        std::cerr << "Unable to open file '" << inpfile
-                  << "'. Please check!" << endl;
+        throw std::runtime_error(fmt::format("Unable to open file '{}'!",
+                                 inpfile));
         exit(2);
     }
 

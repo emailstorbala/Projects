@@ -1,9 +1,10 @@
+/* Copyright [2022-2023] Balamurugan R<emailstorbala@gmail.com> */
+#include <fmt/format.h>
 #include <iostream>
 #include <algorithm>
 #include <chrono>
 #include <fstream>
 #include <tuple>
-#include <fmt/format.h>
 #include <boost/program_options.hpp>
 #include "Utilities.h"
 
@@ -64,10 +65,10 @@ tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
     return make_tuple(filename);
 }
 
-vector <std::pair<char, char>> ReadInputFile(const char * inpfile) {
+vector <std::pair<char, char>> ReadInputFile(string inpfile) {
     vector <std::pair<char, char>> inpCtx;
 
-    if (ifstream myfile(inpfile); myfile.is_open()) {
+    if (ifstream myfile(inpfile.c_str()); myfile.is_open()) {
         string line;
         while (getline(myfile, line)) {
             char p1 = line[0];
@@ -76,8 +77,8 @@ vector <std::pair<char, char>> ReadInputFile(const char * inpfile) {
         }
         myfile.close();
     } else {
-        std::cerr << "Unable to open file '" << inpfile
-                  << "'. Please check!" << endl;
+        throw std::runtime_error(fmt::format("Unable to open file '{}'!",
+                                 inpfile));
         exit(2);
     }
 
@@ -140,7 +141,7 @@ int GetScore(int myitem, int opponent) {
 int main(int argc, const char * argv[]) {
     auto start = chrono::system_clock::now();
     auto && [fname] = ParseProgramArguments(argc, argv);
-    vector <std::pair<char, char>> inpList = ReadInputFile((const char *)fname.c_str());
+    vector <std::pair<char, char>> inpList = ReadInputFile(fname);
 
     PLAYER1['A'] = ROCK;
     PLAYER1['B'] = PAPER;
