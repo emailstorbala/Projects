@@ -65,12 +65,15 @@ tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
     return make_tuple(filename);
 }
 
-vector <std::pair<char, char>> ReadInputFile(const char * inpfile) {
+vector <std::pair<char, char>> ReadInputFile(string inpfile) {
     vector <std::pair<char, char>> inpCtx;
 
-    if (ifstream myfile(inpfile); myfile.is_open()) {
+    if (ifstream myfile(inpfile.c_str()); myfile.is_open()) {
         string line;
         while (getline(myfile, line)) {
+            if (line.size() != 3) {
+                throw std::runtime_error("Input file contains unexpected content");
+            }
             char p1 = line[0];
             char p2 = line[2];
             inpCtx.push_back(std::make_pair(p1, p2));
@@ -106,7 +109,7 @@ int GetScore(int chosen, int otherChosen) {
 int main(int argc, const char * argv[]) {
     auto start = chrono::system_clock::now();
     auto && [fname] = ParseProgramArguments(argc, argv);
-    vector <std::pair<char, char>> inpList = ReadInputFile((const char *)fname.c_str());
+    vector <std::pair<char, char>> inpList = ReadInputFile(fname);
 
     PLAYER1['A'] = ROCK;
     PLAYER1['B'] = PAPER;

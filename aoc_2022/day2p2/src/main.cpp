@@ -71,6 +71,9 @@ vector <std::pair<char, char>> ReadInputFile(string inpfile) {
     if (ifstream myfile(inpfile.c_str()); myfile.is_open()) {
         string line;
         while (getline(myfile, line)) {
+            if (line.size() != 3) {
+                throw std::runtime_error("Input file contains unexpected content");
+            }
             char p1 = line[0];
             char p2 = line[2];
             inpCtx.push_back(std::make_pair(p1, p2));
