@@ -10,6 +10,9 @@ set splitbelow
 set noswapfile
 let NERDTreeShowHidden=1
 
+"let g:airline_theme='base16'
+"let g:airline_theme='base16_default'
+let g:airline_theme='base16_gruvbox_dark_hard'
 let g:indentLine_enabled = 1
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
