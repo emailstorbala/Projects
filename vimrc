@@ -1,5 +1,16 @@
-filetype plugin indent on
 syntax on
+filetype plugin indent on
+
+call plug#begin('~/.vim/plugged')
+Plug 'dense-analysis/ale'
+Plug 'preservim/nerdtree'
+Plug 'davidhalter/jedi-vim'
+Plug 'zivyangll/git-blame.vim'
+Plug 'preservim/nerdtree'
+Plug 'dense-analysis/ale'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'Yggdroot/indentLine'
+call plug#end()
 
 colorscheme gruvbox
 set background=dark
@@ -8,6 +19,8 @@ set showcmd
 set hlsearch
 set splitbelow
 set noswapfile
+set wildmenu
+set ignorecase
 let NERDTreeShowHidden=1
 
 "let g:airline_theme='base16'
@@ -22,23 +35,26 @@ let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 20
 
-call plug#begin('~/.vim/plugged')
-Plug 'dense-analysis/ale'
-Plug 'preservim/nerdtree'
-Plug 'davidhalter/jedi-vim'
-Plug 'Yggdroot/indentLine'
-call plug#end()
 
 set ruler
 set laststatus=2
 set t_vb=
 set mouse-=a
 
+set encoding=utf-8
+set fileencodings=utf-8
+
 let $RTP=split(&runtimepath, ',')[0]
 let $RC="$HOME/.vim/vimrc"
+let NERDTreeShowHidden=1
+set laststatus=2
 
 map <C-p> :e#<CR>
 map <C-n> :set number!<CR>
 map <C-l> :set list!<CR>
+map <S-s> :ALEToggle<CR>
 map <C-t> :NERDTree<CR>
 map <C-x> :NERDTreeClose<ENTER>
+
+"This is to avoid indentation changes for yaml content
+map <C-u> :setlocal indentexpr=<CR>
