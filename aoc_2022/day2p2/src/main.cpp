@@ -3,7 +3,6 @@
 #include <iostream>
 #include <algorithm>
 #include <chrono>
-#include <fstream>
 #include <tuple>
 #include <boost/program_options.hpp>
 #include "Utilities.h"
@@ -22,7 +21,6 @@ using std::string;
 using std::tuple;
 using std::vector;
 using std::map;
-using std::ifstream;
 using fmt::print;
 
 namespace chrono = std::chrono;
@@ -68,21 +66,15 @@ tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
 vector <std::pair<char, char>> ReadInputFile(string inpfile) {
     vector <std::pair<char, char>> inpCtx;
 
-    if (ifstream myfile(inpfile.c_str()); myfile.is_open()) {
-        string line;
-        while (getline(myfile, line)) {
-            if (line.size() != 3) {
-                throw std::runtime_error("Input file contains unexpected content");
-            }
-            char p1 = line[0];
-            char p2 = line[2];
-            inpCtx.push_back(std::make_pair(p1, p2));
+    Utilities utils;
+
+    for (auto && line : utils.SimpleFileRead(inpfile)) {
+        if (line.size() != 3) {
+            throw std::runtime_error("Input file contains unexpected content");
         }
-        myfile.close();
-    } else {
-        throw std::runtime_error(fmt::format("Unable to open file '{}'!",
-                                 inpfile));
-        exit(2);
+        char p1 = line[0];
+        char p2 = line[2];
+        inpCtx.push_back(std::make_pair(p1, p2));
     }
 
     return inpCtx;
