@@ -1,8 +1,8 @@
 /* Copyright [2022-2023] Balamurugan R<emailstorbala@gmail.com> */
-#include "fmt/core.h"
+#include <fmt/core.h>
 #include <iostream>
 #include <algorithm>
-#include <chrono>
+#include <chrono> // NOLINT [build/c++11]
 #include <fstream>
 #include <tuple>
 #include <boost/program_options.hpp>
@@ -67,7 +67,7 @@ tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
 vector <std::pair<char, char>> ReadInputFile(string inpfile) {
     vector <std::pair<char, char>> inpCtx;
 
-    if (ifstream myfile(inpfile.c_str()); myfile.is_open()) {
+    if (ifstream myfile(inpfile.c_str()); myfile.is_open()) { // NOLINT [-Wc++17-extensions]
         string line;
         while (getline(myfile, line)) {
             if (line.size() != 3) {
@@ -90,7 +90,7 @@ vector <std::pair<char, char>> ReadInputFile(string inpfile) {
 int GetScore(int chosen, int otherChosen) {
     int score = 0;
 
-    if ( chosen == otherChosen) {
+    if (chosen == otherChosen) {
         score = chosen + DRAW_BONUS;
     } else if ( (chosen == ROCK && otherChosen == SCISSORS) ||
                 (chosen == SCISSORS && otherChosen == PAPER) ||
@@ -107,7 +107,7 @@ int GetScore(int chosen, int otherChosen) {
 
 int main(int argc, const char * argv[]) {
     auto start = chrono::system_clock::now();
-    auto && [fname] = ParseProgramArguments(argc, argv);
+    auto && [fname] = ParseProgramArguments(argc, argv); // NOLINT [-Wc++17-extensions]
     vector <std::pair<char, char>> inpList = ReadInputFile(fname);
 
     PLAYER1['A'] = ROCK;
@@ -119,15 +119,14 @@ int main(int argc, const char * argv[]) {
     PLAYER2['Z'] = SCISSORS;
 
     int totalScore = 0;
-    for (auto && [p1, p2] : inpList) {
+    for (auto && [p1, p2] : inpList) { // NOLINT [-Wc++17-extensions]
         totalScore += GetScore(PLAYER2[p2], PLAYER1[p1]);
-        //fmt::print("totalScore->{}\n", totalScore);
     }
 
     fmt::print("The total score is {}\n", totalScore);
     auto end = chrono::system_clock::now();
     auto dur = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
-    cout << "Time taken: " << float(dur / 1000) << " mu.secs" << endl;
+    cout << "Time taken: " << float(dur / 1000.0) << " mu.secs" << endl;
 
     return EXIT_SUCCESS;
 }
