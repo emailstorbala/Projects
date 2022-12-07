@@ -1,10 +1,10 @@
 /* Copyright [2022-2023] Balamurugan R<emailstorbala@gmail.com> */
+#include "fmt/core.h"
 #include <iostream>
 #include <algorithm>
 #include <chrono>
 #include <fstream>
 #include <tuple>
-#include <fmt/format.h>
 #include <boost/program_options.hpp>
 #include "Utilities.h"
 
@@ -23,7 +23,6 @@ using std::tuple;
 using std::vector;
 using std::map;
 using std::ifstream;
-using fmt::print;
 
 namespace chrono = std::chrono;
 
