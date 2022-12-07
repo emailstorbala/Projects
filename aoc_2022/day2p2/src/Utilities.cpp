@@ -5,7 +5,6 @@
 #include "Utilities.h"
 
 using std::string;
-using fmt::print;
 
 std::vector<std::string> Utilities::Split(std::string _inp, char DELIMITER) {
     std::string temp;
@@ -55,8 +54,7 @@ std::list <string> Utilities::SimpleFileRead(std::string _fname) {
         }
         myfile.close();
     } else {
-        throw std::runtime_error(fmt::format("Unable to open file '{}'!",
-                                             _fname));
+        throw std::runtime_error(fmt::format("Unable to open file '{}'!", _fname));
         exit(2);
     }
 

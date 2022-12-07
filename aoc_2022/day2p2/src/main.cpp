@@ -21,7 +21,6 @@ using std::string;
 using std::tuple;
 using std::vector;
 using std::map;
-using fmt::print;
 
 namespace chrono = std::chrono;
 
@@ -154,7 +153,7 @@ int main(int argc, const char * argv[]) {
     fmt::print("The total score is {}\n", totalScore);
     auto end = chrono::system_clock::now();
     auto dur = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
-    cout << "Time taken: " << float(dur / 1000) << " mu.secs" << endl;
+    cout << "Time taken: " << float(dur / 1000.0) << " mu.secs" << endl;
 
     return EXIT_SUCCESS;
 }
