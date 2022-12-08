@@ -134,7 +134,7 @@ int GetScore(int myitem, int opponent) {
 
 int main(int argc, const char * argv[]) {
     auto start = chrono::system_clock::now();
-    auto && [fname] = ParseProgramArguments(argc, argv);
+    auto && [fname] = ParseProgramArguments(argc, argv); // NOLINT [-Wc++17-extensions]
     vector <std::pair<char, char>> inpList = ReadInputFile(fname);
 
     PLAYER1['A'] = ROCK;
@@ -146,7 +146,7 @@ int main(int argc, const char * argv[]) {
     PLAYER2['Z'] = SCISSORS;
 
     int totalScore = 0;
-    for (auto && [p1, p2] : inpList) {
+    for (auto && [p1, p2] : inpList) { // NOLINT [-Wc++17-extensions]
         totalScore += GetScore(PLAYER2[p2], PLAYER1[p1]);
     }
 
