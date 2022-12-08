@@ -17,6 +17,8 @@ Plug 'dense-analysis/ale'
 Plug 'preservim/nerdtree'
 Plug 'davidhalter/jedi-vim'
 Plug 'Yggdroot/indentLine'
+Plug 'zivyangll/git-blame.vim'
+Plug 'dhruvasagar/vim-table-mode'
 call plug#end()
 
 "let g:airline_theme='base16'

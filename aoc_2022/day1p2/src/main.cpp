@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-#include <chrono>
+#include <chrono> // NOLINT [build/c++11]
 #include <tuple>
 #include <boost/program_options.hpp>
 #include "Utilities.h"
@@ -22,7 +22,6 @@ using std::string;
 using std::tuple;
 using std::vector;
 using std::ifstream;
-using fmt::print;
 
 namespace chrono = std::chrono;
 
@@ -56,7 +55,7 @@ tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
 vector <int> ReadInputFile(const char * inpfile) {
     vector <int> inpCtx;
 
-    if (ifstream myfile(inpfile); myfile.is_open()) {
+    if (ifstream myfile(inpfile); myfile.is_open()) { // NOLINT [-Wc++17-extensions]
         string line;
         int tmpSum = 0;
         while (getline(myfile, line)) {
@@ -79,14 +78,14 @@ vector <int> ReadInputFile(const char * inpfile) {
 
 int main(int argc, const char * argv[]) {
     auto start = chrono::system_clock::now();
-    auto && [fname] = ParseProgramArguments(argc, argv);
+    auto && [fname] = ParseProgramArguments(argc, argv); // NOLINT [-Wc++17-extensions]
     vector <int> inpList = ReadInputFile((const char *)fname.c_str());
     std::sort(inpList.begin(), inpList.end(), std::greater<>());
     int maxCalorie = inpList[0] + inpList[1] + inpList[2];
     fmt::print("Maximum calore is ->{}\n", maxCalorie);
     auto end = chrono::system_clock::now();
     auto dur = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
-    cout << "Time taken: " << float(dur / 1000) << " mu.secs" << endl;
+    cout << "Time taken: " << float(dur / 1000.0) << " mu.secs" << endl;
 
     return EXIT_SUCCESS;
 }
