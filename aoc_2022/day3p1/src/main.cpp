@@ -81,12 +81,15 @@ int64_t getPrioritySumOfItems(vector <char> _items) {
     int64_t prioritySum = 0;
 
     for (const char & chr : _items) {
-        if (static_cast<int>(chr) < 97) {
+        int charAsInt = static_cast<int>(chr);
+        if (charAsInt < 97) {
             // Upper case letters
-            prioritySum += static_cast<int>(chr) - 65 + 27;
-        } else {
+            prioritySum += (charAsInt - 65) + 27;
+        } else if (charAsInt >= 97) {
             // Lower case letters
-            prioritySum += static_cast<int>(chr) - 97 + 1;
+            prioritySum += (charAsInt - 97) + 1;
+        } else {
+            std::runtime_error("Invalid character came in input file");
         }
     }
 
