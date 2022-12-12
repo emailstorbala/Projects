@@ -1,5 +1,5 @@
 /* Copyright [2022-2023] Balamurugan R<emailstorbala@gmail.com> */
-#include <fmt/format.h>
+#include <fmt/core.h>
 #include <iostream>
 #include <algorithm>
 #include <chrono> // NOLINT [build/c++11]
@@ -20,20 +20,8 @@ using std::endl;
 using std::string;
 using std::tuple;
 using std::vector;
-using std::map;
 
 namespace chrono = std::chrono;
-
-const int ROCK      = 1;
-const int PAPER     = 2;
-const int SCISSORS  = 3;
-
-const int WIN_BONUS = 6;
-const int DRAW_BONUS = 3;
-
-map <char, int> PLAYER1;
-map <char, int> PLAYER2;
-
 
 tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
     string filename;
