@@ -43,7 +43,7 @@ tuple<string, int> ParseProgramArguments(const int argc, const char * argv[]) {
         exit(3);
     }
 
-    if (rvalue < 1 || rvalue > (int) inputStr.length()) {
+    if (rvalue < 1 || rvalue > static_cast <int> (inputStr.length())) {
         cout << format("Invalid rvalue '{}' provided!", rvalue) << endl;
         exit(2);
     }
@@ -53,8 +53,8 @@ tuple<string, int> ParseProgramArguments(const int argc, const char * argv[]) {
 
 template <typename T>
 T Combinations::CreateCombinations() {
-    if ((int)combs[0].length() == this->totalLimit)  return combs;
-    if ((int)this->inp.length() == this->totalLimit)  return {this->inp};
+    if (static_cast<int>(combs[0].length()) == this->totalLimit)  return combs;
+    if (static_cast<int>(this->inp.length()) == this->totalLimit)  return {this->inp};
 
     vector <string> tmpList;
     for (size_t rep = 0; rep < this->inp.length(); rep++) {
@@ -64,7 +64,7 @@ T Combinations::CreateCombinations() {
         }
     }
 
-    if ((int)tmpList[0].length() < this->totalLimit) {
+    if (static_cast<int>(tmpList[0].length()) < this->totalLimit) {
         this->SetInitialCombs(tmpList);
         return this->CreateCombinations<vector<string>>();
     } else {
@@ -93,35 +93,25 @@ bool IsCharacterRepeats(string temp) {
     return false;
 }
 
-Combinations::Combinations(string _inp, int _tot) {
-    this->inp = _inp;
-    this->totalLimit = _tot;
-
-    for (char & ch : inp) {
-        string loc = format("{}", ch);
-        this->combs.push_back(loc);
-    }
-}
-
 bool Combinations::IsDuplicate(vector <string> itemList, string item) {
     if (IsCharacterRepeats(item)) return true;
 
     for (auto && locItem : itemList) {
-        int commChars = 0;
+        size_t commChars = 0;
         for (auto && ch : item) {
             if (locItem.find(ch) != string::npos) {
                 commChars++;
             }
         }
 
-        if (commChars == (int) item.length()) return true;
+        if (commChars == item.length()) return true;
     }
 
     return false;
 }
 
 int main(int argc, const char * args[]) {
-    auto && [inp, rvalue] = ParseProgramArguments(argc, args);
+    auto && [inp, rvalue] = ParseProgramArguments(argc, args); // NOLINT [-Wc++17-extensions]
 
     Combinations combinations(inp, rvalue);
     auto totCombs = combinations.CreateCombinations<vector<string>>();

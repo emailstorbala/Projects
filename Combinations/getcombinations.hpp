@@ -21,7 +21,16 @@ class Combinations {
     int totalLimit;
     vector <string> combs;
     public:
-        Combinations(string _inp, int _tot);
+        Combinations(string _inp, int _tot) : inp(_inp), totalLimit(_tot), combs{} {
+            this->inp = _inp;
+            this->totalLimit = _tot;
+
+            for (char & ch : inp) {
+                string loc = fmt::format("{}", ch);
+                this->combs.push_back(loc);
+            }
+        }
+
         Combinations() = delete;
         void SetInitialCombs(vector <string> _combs) {
             this->combs = _combs;
@@ -31,4 +40,4 @@ class Combinations {
         bool IsDuplicate(vector <string> itemList, string item);
 };
 
-#endif
+#endif  // NOLINT build/header_guard
