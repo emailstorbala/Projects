@@ -44,7 +44,7 @@ int Utilities::ToAscii(int _inp) {
     return '0' + _inp;
 }
 
-std::list <string> Utilities::SimpleFileRead(std::string _fname) {
+std::list <string> Utilities::SimpleFileRead(const std::string &_fname) {
     std::list <string> lines;
 
     if (std::ifstream myfile(_fname.c_str()); myfile.is_open()) { // NOLINT [-Wc++17-extensions]
@@ -61,13 +61,12 @@ std::list <string> Utilities::SimpleFileRead(std::string _fname) {
     return lines;
 }
 
-std::vector <char> Utilities::getCommonCharacters(std::string _str1, std::string _str2) {
-    std::vector <char> result;
+std::set <char> Utilities::getCommonCharacters(const std::string &_str1, const std::string &_str2) {
+    std::set <char> result;
 
     for (const char &chr : _str1) {
-        if ( (_str2.find(chr) != string::npos) &&
-             (find(result.begin(), result.end(), chr) == result.end())) {
-            result.push_back(chr);
+        if (_str2.find(chr) != string::npos) {
+            result.insert(chr);
         }
     }
 
@@ -75,7 +74,7 @@ std::vector <char> Utilities::getCommonCharacters(std::string _str1, std::string
 }
 
 std::string Utilities::PrependZeros(std::string _tmp, int _length) {
-    int diff = _length - _tmp.length();
+    int diff = _length - static_cast<int>(_tmp.length());
     std::string newStr = _tmp;
 
     for (int cnt = 1; cnt <= diff; cnt++) {

@@ -57,7 +57,7 @@ vector <std::pair<string, string>> ReadInputFile(string inpfile) {
     for (auto && line : utils.SimpleFileRead(inpfile)) {
         size_t lineLength = line.size();
         auto part1 = line.substr(0, lineLength/2);
-        auto part2 = line.substr((lineLength/2)+1, lineLength);
+        auto part2 = line.substr(lineLength/2);
 
         inpCtx.push_back(std::make_pair(part1, part2));
     }
@@ -65,20 +65,30 @@ vector <std::pair<string, string>> ReadInputFile(string inpfile) {
     return inpCtx;
 }
 
+int GetPriority(int _inp) {
+    int priority = 0;
+
+    /* Priority of a-z goes through as 1-26
+     * Priority of A-Z goes through as 27-52
+     */
+
+    if (_inp >= 'a') {
+        priority = _inp - 'a' + 1;
+    } else if (_inp >= 'A') {
+        priority = (_inp - 'A') + 27;
+    } else {
+        std::runtime_error("Invalid character came in input file");
+    }
+
+    return priority;
+}
+
 int64_t getPrioritySumOfItems(vector <char> _items) {
     int64_t prioritySum = 0;
 
     for (const char & chr : _items) {
-        int charAsInt = static_cast<int>(chr);
-        if (charAsInt < 97) {
-            // Upper case letters
-            prioritySum += (charAsInt - 65) + 27;
-        } else if (charAsInt >= 97) {
-            // Lower case letters
-            prioritySum += (charAsInt - 97) + 1;
-        } else {
-            std::runtime_error("Invalid character came in input file");
-        }
+        int priority = GetPriority(chr);
+        prioritySum += priority;
     }
 
     return prioritySum;

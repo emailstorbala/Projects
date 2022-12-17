@@ -2,6 +2,7 @@
 #ifndef __SRC_UTILITIES_H__
 #define __SRC_UTILITIES_H__
 #include <vector>
+#include <set>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -14,8 +15,8 @@ class Utilities {
         std::vector<int64_t> ToLongV(std::vector<std::string> _inp);
         int ToInteger(char _chr);
         int ToAscii(int _inp);
-        std::list <std::string> SimpleFileRead(std::string _fname);
-        std::vector <char> getCommonCharacters(std::string _str1, std::string _str2);
+        std::list <std::string> SimpleFileRead(const std::string &_fname);
+        std::set <char> getCommonCharacters(const std::string &_str1, const std::string &_str2);
         std::string PrependZeros(std::string _tmp, int _length);
         void GetPermutations(std::string str, std::string out,
                              std::vector <std::string> & permutations);
