@@ -3,7 +3,6 @@
 #include <iostream>
 #include <algorithm>
 #include <chrono> // NOLINT [build/c++11]
-#include <tuple>
 #include <boost/program_options.hpp>
 #include "Utilities.h"
 
@@ -55,10 +54,7 @@ vector <std::pair<string, string>> ReadInputFile(string inpfile) {
     Utilities utils;
 
     for (auto && line : utils.SimpleFileRead(inpfile)) {
-        size_t lineLength = line.size();
-        auto part1 = line.substr(0, lineLength/2);
-        auto part2 = line.substr(lineLength/2);
-
+        auto && [part1, part2] = utils.SplitStringExactHalf(line); // NOLINT [-Wc++17-extensions]
         inpCtx.push_back(std::make_pair(part1, part2));
     }
 

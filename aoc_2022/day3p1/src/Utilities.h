@@ -7,6 +7,7 @@
 #include <sstream>
 #include <string>
 #include <list>
+#include <tuple>
 
 class Utilities {
  public:
@@ -15,6 +16,7 @@ class Utilities {
         std::vector<int64_t> ToLongV(std::vector<std::string> _inp);
         int ToInteger(char _chr);
         int ToAscii(int _inp);
+        std::tuple<std::string, std::string> SplitStringExactHalf(const std::string & inp);
         std::list <std::string> SimpleFileRead(const std::string &_fname);
         std::set <char> getCommonCharacters(const std::string &_str1, const std::string &_str2);
         std::string PrependZeros(std::string _tmp, int _length);

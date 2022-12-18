@@ -44,6 +44,14 @@ int Utilities::ToAscii(int _inp) {
     return '0' + _inp;
 }
 
+std::tuple<std::string, std::string> Utilities::SplitStringExactHalf(const std::string & inp) {
+    size_t inpLength = inp.size();
+    auto part1 = inp.substr(0, inpLength/2);
+    auto part2 = inp.substr(inpLength/2);
+
+    return std::make_tuple(part1, part2);
+}
+
 std::list <string> Utilities::SimpleFileRead(const std::string &_fname) {
     std::list <string> lines;
 
