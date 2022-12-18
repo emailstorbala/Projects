@@ -3,7 +3,9 @@ use std::io::{self, BufRead};
 use std::path::Path;
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where P: AsRef<Path>, {
+where
+    P: AsRef<Path>,
+{
     let file = File::open(filename)?;
     Ok(io::BufReader::new(file).lines())
 }
@@ -33,7 +35,7 @@ fn get_max_of(vec: Vec<i64>) -> i64 {
     let mut max: i64 = 0;
     for num in vec {
         if max >= num {
-            continue
+            continue;
         } else {
             max = num;
         }
