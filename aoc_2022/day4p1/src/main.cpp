@@ -81,15 +81,7 @@ int main(int argc, const char * argv[]) {
     Utilities utils;
 
     for (auto && lineDtls : inpList) { // NOLINT [-Wc++17-extensions]
-        for (auto && tmpSet : lineDtls) {
-            fmt::print("Set numbers: ");
-            for (auto && num : tmpSet) {
-                fmt::print(" {}", num);
-            }
-            fmt::print("\n");
-        }
-        fmt::print("\n");
-        // To set check set A contains set B or set B contains set A
+        /* Checking either set A contains set B or set B contains set A */
         if (utils.SetContainsSet(lineDtls[0], lineDtls[1]) ||
             utils.SetContainsSet(lineDtls[1], lineDtls[0])) {
             containedSets++;
