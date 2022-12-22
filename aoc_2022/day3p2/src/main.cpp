@@ -51,7 +51,7 @@ tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
     return make_tuple(filename);
 }
 
-std::map<int, std::vector<string>> ReadInputFile(string inpfile) {
+std::map<int, std::vector<string>> ReadInputFile(const string &inpfile) {
     Utilities utils;
 
     std::map<int, std::vector<string>> groupDetails;
@@ -90,7 +90,7 @@ std::set <char> GetCommonChars(const std::vector <string> &tmpGrp) {
     return commonSet;
 }
 
-int GetPriority(int _inp) {
+int GetPriority(const int &_inp) {
     int priority = 0;
 
     /* Priority of a-z goes through as 1-26
@@ -108,11 +108,11 @@ int GetPriority(int _inp) {
     return priority;
 }
 
-int64_t getPrioritySumOfItems(vector <char> _items) {
+int64_t getPrioritySumOfItems(const vector <char> &_items) {
     int64_t prioritySum = 0;
 
     for (const char & chr : _items) {
-        int priority = GetPriority(chr);
+        int priority = GetPriority(std::cref(chr));
         prioritySum += priority;
     }
 
@@ -122,16 +122,16 @@ int64_t getPrioritySumOfItems(vector <char> _items) {
 int main(int argc, const char * argv[]) {
     auto start = chrono::system_clock::now();
     auto && [fname] = ParseProgramArguments(argc, argv); // NOLINT [-Wc++17-extensions]
-    auto inpList = ReadInputFile(fname);
+    auto inpList = ReadInputFile(std::cref(fname));
 
     vector <char> allCommonChars;
     for (auto && [p1, p2] : inpList) { // NOLINT [-Wc++17-extensions]
-        for (const char & cchr : GetCommonChars(std::ref(p2))) {
+        for (const char & cchr : GetCommonChars(std::cref(p2))) {
             allCommonChars.push_back(cchr);
         }
     }
 
-    auto prioritySum = getPrioritySumOfItems(allCommonChars);
+    auto prioritySum = getPrioritySumOfItems(std::cref(allCommonChars));
     fmt::print("The priority sum is {}\n", prioritySum);
 
     auto end = chrono::system_clock::now();
