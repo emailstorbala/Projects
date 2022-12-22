@@ -10,7 +10,6 @@ set splitbelow
 set noswapfile
 let NERDTreeShowHidden=1
 
-
 call plug#begin('~/.vim/plugged')
 Plug 'neovim/nvim-lspconfig'
 Plug 'dense-analysis/ale'
@@ -20,6 +19,9 @@ Plug 'Yggdroot/indentLine'
 Plug 'zivyangll/git-blame.vim'
 Plug 'dhruvasagar/vim-table-mode'
 call plug#end()
+
+let g:ale_sign_error = '●'
+let g:ale_sign_warning = '!'
 
 "let g:airline_theme='base16'
 "let g:airline_theme='base16_default'
@@ -47,6 +49,9 @@ set fileencodings=utf-8
 
 let $RTP=split(&runtimepath, ',')[0]
 let $RC="$HOME/.vim/vimrc"
+
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
 
 map <C-p> :e#<CR>
 map <C-n> :set number!<CR>
