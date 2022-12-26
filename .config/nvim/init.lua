@@ -97,6 +97,14 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
+vim.opt.listchars = {
+  eol = '$',
+  tab = '>-',
+  extends = '>',
+  precedes = '<',
+  trail = '~'
+}
+
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
