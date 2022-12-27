@@ -1,0 +1,19 @@
+[user]
+    name = Balamurugan R
+    email = emailstorbala@gmail.com
+[core]
+    editor = nvim
+[pull]
+    rebase = true
+[diff]
+    prompt = false
+    tool = vimdiff
+[difftool]
+    prompt = false
+    tool = vimdiff
+[merge]
+    prompt = false
+    tool = vimdiff
+[mergetool "vimdiff"]
+    prompt = false
+    path = nvim

@@ -198,6 +198,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "~/.local/share/nvim/site/pack/packer/start/vim-sleuth",
     url = "https://github.com/tpope/vim-sleuth"
+  },
+  ["vim-table-mode"] = {
+    loaded = true,
+    path = "/home/balamurugan/.local/share/nvim/site/pack/packer/start/vim-table-mode",
+    url = "https://github.com/dhruvasagar/vim-table-mode"
   }
 }
 
