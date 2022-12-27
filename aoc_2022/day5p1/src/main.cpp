@@ -1,5 +1,9 @@
 /* Copyright [2022-2023] Balamurugan R<emailstorbala@gmail.com> */
+#include <boost/exception/exception.hpp>
+#include <cstdint>
+#include <exception>
 #include <fmt/core.h>
+#include <fmt/format.h>
 #include <cstdio>
 #include <iostream>
 #include <algorithm>
@@ -62,6 +66,8 @@ struct CrateStack {
     void ReadInputFile(string inpfile);
     void PrintStackMap(void);
     void PrintInstructions(void);
+    bool ApplyInstruction(tuple<int, int, int> ins);
+    void ApplyAllInstructionsInOrder(void);
 };
 
 void CrateStack::ReadInputFile(string inpfile) {
@@ -74,7 +80,7 @@ void CrateStack::ReadInputFile(string inpfile) {
             int crateId = static_cast<int>(((idx+1)/4) + 1);
             char locChr = line[idx+1]; // crate position is idx + 1
             // fmt::print("crateId, idx, chr -> '{}', '{}', '{}'\n", crateId, idx, locChr);
-            if (locChr) {
+            if (locChr && locChr != ' ') {
                 std::list <char> tmpCrates;
                 if (this->stackMap.find(crateId) != this->stackMap.end()) {
                     tmpCrates = this->stackMap[crateId];
@@ -115,14 +121,48 @@ void CrateStack::PrintInstructions(void) {
     }
 }
 
+bool CrateStack::ApplyInstruction(tuple<int, int, int> ins) {
+    bool applied = false;
+    auto && [numCrates, fromCrateId, toCrateId] = ins; // NOLINT [-Wc++17-extensions]
+
+    try {
+        for (int cnt = 0; cnt < numCrates; cnt++) {
+            char loc = this->stackMap[fromCrateId].front();
+            this->stackMap[fromCrateId].pop_front();
+            this->stackMap[toCrateId].push_front(loc);
+        }
+    } catch (std::exception & excp) {
+        string customExcp = fmt::format("{} {}", "Runtime exception occurred! ", excp.what());
+        std::runtime_error(customExcp.c_str());
+    }
+
+    return applied;
+}
+
+void CrateStack::ApplyAllInstructionsInOrder(void) {
+    for (auto && crateIns : this->stackInst) {
+        this->ApplyInstruction(crateIns);
+    }
+}
+
 int main(int argc, const char * argv[]) {
     auto start = chrono::system_clock::now();
     auto && [fname] = ParseProgramArguments(argc, argv); // NOLINT [-Wc++17-extensions]
 
     auto crateStackPtr = std::make_unique<CrateStack>();
     crateStackPtr->ReadInputFile(fname);
-    crateStackPtr->PrintStackMap();
-    crateStackPtr->PrintInstructions();
+
+    crateStackPtr->ApplyAllInstructionsInOrder();
+    //fmt::print("After instructions apply\n");
+    //crateStackPtr->PrintStackMap();
+
+    string res;
+
+    for(auto && [crateId, crateList] : crateStackPtr->stackMap) { // NOLINT [-Wc++17-extensions]
+        char topChr = crateList.front();
+        res.push_back(topChr);
+    }
+    fmt::print("Result is {}\n", res);
 
     auto end = chrono::system_clock::now();
     auto dur = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
