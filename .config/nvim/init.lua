@@ -23,7 +23,6 @@ require('packer').startup(function(use)
 
       -- Additional lua configuration, makes nvim stuff amazing
       'folke/neodev.nvim',
-      'rust-lang/rust-analyzer',
     },
   }
 
@@ -351,9 +350,9 @@ end
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
   clangd = {},
-  --gopls = {},
   jedi_language_server= {},
-  rust_analyzer = {},
+  --gopls = {},
+  --rust_analyzer = {},
   -- tsserver = {},
 
   sumneko_lua = {
