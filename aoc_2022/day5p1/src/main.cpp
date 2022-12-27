@@ -1,7 +1,4 @@
 /* Copyright [2022-2023] Balamurugan R<emailstorbala@gmail.com> */
-#include <boost/exception/exception.hpp>
-#include <cstdint>
-#include <exception>
 #include <fmt/core.h>
 #include <fmt/format.h>
 #include <cstdio>
@@ -10,6 +7,7 @@
 #include <chrono> // NOLINT [build/c++11]
 #include <boost/program_options.hpp>
 #include <memory>
+#include <exception>
 #include <stdexcept>
 #include <tuple>
 #include <utility>
@@ -72,14 +70,14 @@ struct CrateStack {
 
 void CrateStack::ReadInputFile(string inpfile) {
     Utilities utils;
+    std::list <string> lines = utils.SimpleFileRead(inpfile);
 
-    for (auto && line : utils.SimpleFileRead(inpfile)) {
+    for (auto && line : lines) {
         if (line.empty() || line[1] == '1') break;
 
+        int crateId = 1;
         for (size_t idx = 0; idx < line.size(); idx+=4) {
-            int crateId = static_cast<int>(((idx+1)/4) + 1);
-            char locChr = line[idx+1]; // crate position is idx + 1
-            // fmt::print("crateId, idx, chr -> '{}', '{}', '{}'\n", crateId, idx, locChr);
+            char locChr = line[idx+1];  // crate position is idx + 1
             if (locChr && locChr != ' ') {
                 std::list <char> tmpCrates;
                 if (this->stackMap.find(crateId) != this->stackMap.end()) {
@@ -89,12 +87,12 @@ void CrateStack::ReadInputFile(string inpfile) {
                 this->stackMap[crateId] = tmpCrates;
             }
 
-            if (idx%4 == 0) crateId++;
+            crateId++;
         }
     }
 
-    for (auto && line : utils.SimpleFileRead(inpfile)) {
-        if (line.find("move") != string::npos) {
+    for (auto && line : lines) {
+        if (utils.StringContainsString(line, "move")) {
             int numCrates;
             int fromCrateId;
             int toCrateId;
@@ -153,8 +151,8 @@ int main(int argc, const char * argv[]) {
     crateStackPtr->ReadInputFile(fname);
 
     crateStackPtr->ApplyAllInstructionsInOrder();
-    //fmt::print("After instructions apply\n");
-    //crateStackPtr->PrintStackMap();
+    // fmt::print("After instructions apply\n");
+    // crateStackPtr->PrintStackMap();
 
     string res;
 

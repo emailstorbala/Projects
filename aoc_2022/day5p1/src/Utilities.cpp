@@ -1,13 +1,13 @@
 /* Copyright [2022-2023] Balamurugan R<emailstorbala@gmail.com> */
-#include <fmt/format.h>
 #include <memory>
 #include <ranges>
 #include <algorithm>
+#include <fmt/format.h>
 #include "Utilities.h"
 
 using std::string;
 
-std::vector<std::string> Utilities::Split(std::string _inp, char DELIMITER) {
+std::vector<std::string> Utilities::Split(std::string _inp, char DELIMITER) const {
     std::string temp;
     std::istringstream ss(_inp);
     std::vector<std::string> retV;
@@ -37,7 +37,7 @@ std::vector<int64_t> Utilities::ToLongV(std::vector<std::string> _inp) {
     return retV;
 }
 
-std::set<int> Utilities::GetNumberRange(int begin, int end) {
+std::set<int> Utilities::GetNumberRange(int begin, int end) const {
     std::set <int> numRange;
     for (int i : std::views::iota(begin, end+1)) {
         numRange.emplace(i);
@@ -46,14 +46,18 @@ std::set<int> Utilities::GetNumberRange(int begin, int end) {
     return numRange;
 }
 
-bool Utilities::SetContainsSet(std::set<int> set1,  std::set<int> set2) {
+bool Utilities::StringContainsString(const std::string & inpStr, const std::string & tmp) const {
+    return (inpStr.find(tmp) != string::npos);
+}
+
+bool Utilities::SetContainsSet(std::set<int> set1,  std::set<int> set2) const {
     // This checks and returns whether set1 contains set2
     return std::includes(set1.begin(), set1.end(), set2.begin(), set2.end());
 }
 
-bool Utilities::DoSetsHaveOverlapItems(std::set<int> set1, std::set<int> set2) {
+bool Utilities::DoSetsHaveOverlapItems(std::set<int> set1, std::set<int> set2) const {
     bool hasOverlapItems = false;
-    for(const int & set1_item : set1) {
+    for (const int & set1_item : set1) {
         for (const int & set2_item : set2) {
             if (set1_item == set2_item) {
                 hasOverlapItems = true;
@@ -66,12 +70,12 @@ bool Utilities::DoSetsHaveOverlapItems(std::set<int> set1, std::set<int> set2) {
     return hasOverlapItems;
 }
 
-int Utilities::ToInteger(char _chr) {
+int Utilities::ToInteger(char _chr) const {
     int ret = _chr - '0';
     return ret;
 }
 
-int Utilities::ToAscii(int _inp) {
+int Utilities::ToAscii(int _inp) const {
     return '0' + _inp;
 }
 
