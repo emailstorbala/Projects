@@ -166,6 +166,11 @@ _G.packer_plugins = {
     path = "/home/balamurugan/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["rust-analyzer"] = {
+    loaded = true,
+    path = "/home/balamurugan/.local/share/nvim/site/pack/packer/start/rust-analyzer",
+    url = "https://github.com/rust-lang/rust-analyzer"
+  },
   ["telescope-fzf-native.nvim"] = {
     cond = { true },
     loaded = false,

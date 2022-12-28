@@ -23,6 +23,7 @@ require('packer').startup(function(use)
 
       -- Additional lua configuration, makes nvim stuff amazing
       'folke/neodev.nvim',
+      'rust-lang/rust-analyzer',
     },
   }
 
