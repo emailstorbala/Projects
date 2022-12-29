@@ -2,6 +2,7 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 #include <cstdio>
+#include <functional>
 #include <iostream>
 #include <algorithm>
 #include <chrono> // NOLINT [build/c++11]
@@ -125,13 +126,15 @@ bool CrateStack::ApplyInstruction(tuple<int, int, int> ins) {
     Utilities utils;
 
     try {
-        auto tmpCrates = std::vector<char>(this->stackMap[fromCrateId].begin(),
-                                           this->stackMap[fromCrateId].begin() + numCrates);
+        // Getting the sub-vectors from an existing vector
+        vector<char> tmpCrates = {this->stackMap[fromCrateId].begin(),
+                                  this->stackMap[fromCrateId].begin() + numCrates};
 
-        this->stackMap[fromCrateId] = std::vector<char>(this->stackMap[fromCrateId].begin() + numCrates,
-                                                        this->stackMap[fromCrateId].end());
+        this->stackMap[fromCrateId] = {this->stackMap[fromCrateId].begin() + numCrates,
+                                       this->stackMap[fromCrateId].end()};
 
-        this->stackMap[toCrateId] = utils.ConcatenateVectors(tmpCrates, this->stackMap[toCrateId]);
+        this->stackMap[toCrateId] = utils.ConcatenateVectors(std::cref(tmpCrates),
+                                                             std::cref(this->stackMap[toCrateId]));
     } catch (std::exception & excp) {
         string customExcp = fmt::format("{} {}", "Runtime exception occurred! ", excp.what());
         std::runtime_error(customExcp.c_str());
