@@ -21,8 +21,8 @@ class Utilities {
         int ToAscii(int _inp) const;
         bool SetContainsSet(std::set<int> set1,  std::set<int> set2) const;
         bool DoSetsHaveOverlapItems(std::set<int> set1, std::set<int> set2) const;
-        // std::vector<char> GetSubVector(const std::vector<char> & inpVec, int start, int end) const;
-        // void ConcatenateVector(std::vector<char> & vec1, const std::vector<char> & vec2);
+        std::vector<char> ConcatenateVectors(const std::vector<char> & vec1,
+                                             const std::vector<char> & vec2) const;
         std::tuple<std::string, std::string> SplitStringExactHalf(const std::string & inp);
         std::list <std::string> SimpleFileRead(const std::string &_fname);
         std::set <char> getCommonCharacters(const std::string &_str1, const std::string &_str2);

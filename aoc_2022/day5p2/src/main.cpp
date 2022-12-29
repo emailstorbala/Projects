@@ -122,35 +122,16 @@ void CrateStack::PrintInstructions(void) {
 bool CrateStack::ApplyInstruction(tuple<int, int, int> ins) {
     bool applied = false;
     auto && [numCrates, fromCrateId, toCrateId] = ins; // NOLINT [-Wc++17-extensions]
-    // Utilities utils;
+    Utilities utils;
 
     try {
         auto tmpCrates = std::vector<char>(this->stackMap[fromCrateId].begin(),
-        this->stackMap[fromCrateId].begin() + numCrates);
+                                           this->stackMap[fromCrateId].begin() + numCrates);
 
         this->stackMap[fromCrateId] = std::vector<char>(this->stackMap[fromCrateId].begin() + numCrates,
                                                         this->stackMap[fromCrateId].end());
 
-        tmpCrates.insert(tmpCrates.end(), this->stackMap[toCrateId].begin(),
-                         this->stackMap[toCrateId].end());
-        this->stackMap[toCrateId] = tmpCrates;
-
-
-        // // The moved set of crates is stored in a temporary vector
-        // fmt::print("1111111111\n");
-        // auto tmpCrates = utils.GetSubVector(this->stackMap[fromCrateId], 0, numCrates);
-        // size_t fromCrateSize = this->stackMap[fromCrateId].size();
-        // fmt::print("2222222 -> {fromCrateSize}\n");
-        // this->stackMap[fromCrateId] = utils.GetSubVector(this->stackMap[fromCrateId],
-        //                                                  numCrates, fromCrateSize);
-        // fmt::print("3333333333333\n");
-        //
-        // // Moved crates and target crate list are combined here as told
-        // utils.ConcatenateVector(tmpCrates, this->stackMap[toCrateId]);
-        // fmt::print("44444444\n");
-        // // Replace the resultant (concatenated) crates to target. Overwritten/replaced.
-        // this->stackMap[toCrateId] = tmpCrates;
-        // fmt::print("5555555\n");
+        this->stackMap[toCrateId] = utils.ConcatenateVectors(tmpCrates, this->stackMap[toCrateId]);
     } catch (std::exception & excp) {
         string customExcp = fmt::format("{} {}", "Runtime exception occurred! ", excp.what());
         std::runtime_error(customExcp.c_str());

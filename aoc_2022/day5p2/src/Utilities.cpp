@@ -71,13 +71,14 @@ bool Utilities::DoSetsHaveOverlapItems(std::set<int> set1, std::set<int> set2) c
     return hasOverlapItems;
 }
 
-// vector<char> Utilities::GetSubVector(const vector<char> & inpVec, int start, int end) const {
-//     return vector<char>(inpVec.begin() + start, inpVec.end() + end);
-// }
-//
-// void Utilities::ConcatenateVector(vector<char> & vec1, const vector<char> & vec2) {
-//     vec1.insert(vec1.end(), vec2.begin(), vec2.end());
-// }
+vector<char> Utilities::ConcatenateVectors(const vector<char> & vec1,
+                                           const vector<char> & vec2) const {
+    vector <char> retVec;
+    retVec.insert(retVec.end(), vec1.begin(), vec1.end());
+    retVec.insert(retVec.end(), vec2.begin(), vec2.end());
+
+    return retVec;
+}
 
 int Utilities::ToInteger(char _chr) const {
     int ret = _chr - '0';
