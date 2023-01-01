@@ -24,9 +24,6 @@ using boost::program_options::error;
 using std::cout;
 using std::endl;
 using std::string;
-using std::tuple;
-using std::vector;
-using std::map;
 
 namespace chrono = std::chrono;
 

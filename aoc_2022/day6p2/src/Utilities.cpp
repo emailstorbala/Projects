@@ -1,5 +1,4 @@
 /* Copyright [2022-2023] Balamurugan R<emailstorbala@gmail.com> */
-#include <memory>
 #include <ranges>
 #include <algorithm>
 #include <fmt/format.h>
