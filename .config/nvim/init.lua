@@ -24,6 +24,7 @@ require('packer').startup(function(use)
       -- Additional lua configuration, makes nvim stuff amazing
       'folke/neodev.nvim',
       'rust-lang/rust-analyzer',
+      'zivyangll/git-blame.vim',
     },
   }
 
@@ -108,6 +109,7 @@ vim.opt.listchars = {
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
+vim.opt.paste = true
 
 -- Set highlight on search
 vim.o.hlsearch = true
