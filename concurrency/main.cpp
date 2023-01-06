@@ -99,7 +99,7 @@ int main(int argc, const char * argv[]) {
 
     auto end = chrono::system_clock::now();
     auto dur = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
-    cout << "Time taken: " << float(dur / 1000) << " mu.secs" << endl;
+    cout << "Time taken: " << float(dur / 1000.0) << " mu.secs" << endl;
 
     return 0;
 }
