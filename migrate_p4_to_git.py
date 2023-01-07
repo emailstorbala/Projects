@@ -11,9 +11,8 @@ instead of Shell.
 
 import os
 import argparse
-import subprocess
 import logging
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STDOUT
 from multiprocessing import Process
 from typing import List
 
@@ -87,13 +86,17 @@ def clone_from_p4(args, p4_path:str, git_branch:str):
         cmd_execpath_map[2] = (cmd, clone_dir)
     
     cmd = f"git remote add origin {args.gitlab_endpoint}:{args.root_group}/{args.doc_grp}/{repo_name}.git"
+    cmd = (
+            "git remote add origin "
+            f"{args.gitlab_endpoint}:{args.root_group}/${args.doc_grp}/{repo_name}.git"
+          )
     cmd_execpath_map[3] = (cmd, clone_dir)
 
     cmd = f"git push origin {git_branch}"
     cmd_execpath_map[4] = (cmd, clone_dir)
 
     for (cmd, exec_path) in cmd_execpath_map.values():
-        with Popen(cmd.split(), cwd=exec_path, stdout=PIPE, stderr=subprocess.STDOUT, encoding='utf-8') as proc:
+        with Popen(cmd.split(), cwd=exec_path, stdout=PIPE, stderr=STDOUT, encoding='utf-8') as proc:
             while proc.stdout:
                 data:str = proc.stdout.read(1024)
                 if not data:
