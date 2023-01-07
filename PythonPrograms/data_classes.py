@@ -14,7 +14,7 @@ class Person:
     age: int
     address: str
 
-def main() -> None:
+def main():
     """
     Main function
     """
