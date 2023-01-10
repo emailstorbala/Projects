@@ -1,5 +1,5 @@
 /* Copyright [2022-2023] Balamurugan R <emailstorbala@gmail.com> */
-#include <fmt/format.h>
+#include <fmt/core.h>
 #include <iostream>
 #include <tuple>
 #include <boost/program_options.hpp>
@@ -18,7 +18,6 @@ using std::endl;
 using std::string;
 using std::tuple;
 using std::vector;
-using fmt::print;
 
 tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
     string filename;
@@ -56,7 +55,7 @@ int main(int argc, const char * argv[]) {
     auto splitList = utils.Split(sample, ':');
 
     for (auto && tmp : splitList) {
-        fmt::print("item is {}\n", tmp);
+        fmt::print("Text is {}\n", tmp);
     }
     return EXIT_SUCCESS;
 }
