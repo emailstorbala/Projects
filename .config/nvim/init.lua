@@ -126,6 +126,8 @@ vim.opt.textwidth = 100
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
+vim.opt.clipboard = "unnamedplus"
+
 -- Set colorscheme
 vim.cmd [[colorscheme onedark]]
 

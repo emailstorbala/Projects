@@ -16,10 +16,8 @@ using boost::program_options::error;
 using std::cout;
 using std::endl;
 using std::string;
-using std::tuple;
-using std::vector;
 
-tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
+string ParseProgramArguments(const int argc, const char * argv[]) {
     string filename;
     variables_map vm;
     options_description prgDesc{"Usage"};
@@ -43,11 +41,11 @@ tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
         exit(3);
     }
 
-    return make_tuple(filename);
+    return filename;
 }
 
 int main(int argc, const char * argv[]) {
-    auto && [fname] = ParseProgramArguments(argc, argv);
+    auto && fname = ParseProgramArguments(argc, argv); // NOLINT [-Wc++17-extensions]
     fmt::print("Input file name provided is {}\n", fname);
 
     string sample = "Guduvanchery:Tamilnadu:India";
