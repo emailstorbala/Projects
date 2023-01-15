@@ -5,7 +5,6 @@ using std::cout;
 using std::cerr;
 using std::endl;
 using std::vector;
-using std::map;
 using std::ifstream;
 using std::tuple;
 
@@ -79,18 +78,16 @@ T Combinations::CreateCombinations() {
 }
 
 bool IsCharacterRepeats(string temp) {
-    for (char & ch : temp) {
-        int rep = 0;
-        for (size_t pos = 0; pos < temp.length(); pos++) {
-            if (temp[pos] == ch) {
-                rep++;
-            }
-        }
+    bool repeats = false;
 
-        if (rep > 1) return true;
+    for (char & ch : temp) {
+        if (temp.find_first_of(ch) != temp.find_last_of(ch)) {
+            repeats = true;
+            break;
+        }
     }
 
-    return false;
+    return repeats;
 }
 
 bool Combinations::IsDuplicate(vector <string> itemList, string item) {
