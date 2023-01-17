@@ -34,9 +34,7 @@ fn read_input_file(inp: String) -> Vec<i64> {
 fn get_max_of(vec: Vec<i64>) -> i64 {
     let mut max: i64 = 0;
     for num in vec {
-        if max >= num {
-            continue;
-        } else {
+        if max < num {
             max = num;
         }
     }
