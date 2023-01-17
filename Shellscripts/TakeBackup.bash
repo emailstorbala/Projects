@@ -9,8 +9,7 @@ Creation Date : 27-05-2016
 : "
 Set Global variables for this function
 "
-SetGlobalVariables()
-{
+SetGlobalVariables() {
     GLOBAL_BACKUP_DIRECTORY="$HOME/BackupArchivePath"
     INP_FILE_AND_DIR_LIST=
     DATE_TIME_STAMP=$(date +%d-%b-%Y_%H-%M-%S)
@@ -23,16 +22,14 @@ SetGlobalVariables()
 : "
 Define usage of this script
 "
-Usage()
-{
+Usage() {
     echo "$0 <file1>/<dir1> ... <filen>/<dirn>"
 }
 
 : "
 This function parses the arguments of the script and validates the inputs.
 "
-ParseAndValidate()
-{
+ParseAndValidate() {
     local args="$*"
     local argc=$#
 
@@ -62,16 +59,14 @@ ParseAndValidate()
 : "
 Actual backup functionality for the given input file(s) and dir(s)
 "
-DoBackup()
-{
+DoBackup() {
     tar -czf "${TARGET_FILE_NAME}" "${INP_FILE_AND_DIR_LIST}" || return $?
 }
 
 : "
 Main function that does the work flow
 "
-main()
-{
+main() {
     SetGlobalVariables || return $?
     ParseAndValidate "$@" || return $?
     DoBackup || return $?
