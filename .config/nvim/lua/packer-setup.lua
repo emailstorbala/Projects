@@ -24,7 +24,7 @@ require('packer').startup(function(use)
       -- Additional lua configuration, makes nvim stuff amazing
       'folke/neodev.nvim',
       'rust-lang/rust-analyzer',
-      'zivyangll/git-blame.vim',
+      'APZelos/blamer.nvim',
     },
   }
 
