@@ -2,32 +2,7 @@ extern crate lazy_static;
 
 use lazy_static::lazy_static;
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::{self, BufRead};
-use std::path::Path;
-
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
-where
-    P: AsRef<Path>,
-{
-    let file = File::open(filename)?;
-    Ok(io::BufReader::new(file).lines())
-}
-
-fn read_input_file(inp: String) -> Vec<String> {
-    let mut res = Vec::new();
-
-    if let Ok(lines) = read_lines(inp) {
-        for line in lines {
-            if let Ok(ip) = line {
-                let pairs = ip.split(" ").collect();
-                res.push(pairs);
-            }
-        }
-    }
-
-    return res;
-}
+use std::{fs, char};
 
 const ROCK: i32 = 1;
 const PAPER: i32 = 2;
@@ -64,8 +39,7 @@ fn get_score(opp: char, mine: char) -> i32 {
         res += opp_val + DRAW_BONUS;
     } else if (opp_val == ROCK && my_val == SCISSORS)
         || (opp_val == SCISSORS && my_val == PAPER)
-        || (opp_val == PAPER && my_val == ROCK)
-    {
+        || (opp_val == PAPER && my_val == ROCK) {
         // Losing case
         res += my_val + LOSE_BONUS;
     } else {
@@ -77,16 +51,19 @@ fn get_score(opp: char, mine: char) -> i32 {
 }
 
 fn main() {
-    let inp = String::from("inp_file.txt");
-    let ctx = read_input_file(inp);
+    let contents = fs::read_to_string("inp_file.txt").expect("Unable to load the file!");
+    let mut ctx = Vec::new();
+
+    for rec in contents.split('\n') {
+        if !rec.is_empty() {
+            let pair: (char, char) = (rec.chars().nth(0).unwrap(), rec.chars().nth(2).unwrap());
+            ctx.push(pair);
+        }
+    }
 
     let mut tot_score: i32 = 0;
     for pair in ctx {
-        let chrs: Vec<char> = pair.chars().collect();
-        let opp_item: char = chrs[0];
-        let my_item: char = chrs[1];
-
-        tot_score += get_score(opp_item, my_item);
+        tot_score += get_score(pair.0, pair.1);
     }
     println!("Total score is {}", tot_score);
 }
