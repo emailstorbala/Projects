@@ -3,6 +3,7 @@ extern crate lazy_static;
 use lazy_static::lazy_static;
 use std::collections::HashMap;
 use std::{fs, char};
+use std::time::Instant;
 
 const ROCK: i32 = 1;
 const PAPER: i32 = 2;
@@ -51,6 +52,7 @@ fn get_score(opp: char, mine: char) -> i32 {
 }
 
 fn main() {
+    let start_time = Instant::now();
     let contents = fs::read_to_string("inp_file.txt").expect("Unable to load the file!");
     let mut ctx = Vec::new();
 
@@ -66,4 +68,6 @@ fn main() {
         tot_score += get_score(pair.0, pair.1);
     }
     println!("Total score is {}", tot_score);
+    let duration = start_time.elapsed();
+    println!("Total time taken -> {:?} ", duration);
 }
