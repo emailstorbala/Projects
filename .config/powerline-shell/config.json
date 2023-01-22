@@ -4,10 +4,9 @@
     "hostname",
     "ssh",
     "cwd",
-    "git",
-    "time"
+    "git"
   ],
-  "mode": "flat",
+  "mode": "patched",
   "hostname" : {
   },
   "cwd": {
