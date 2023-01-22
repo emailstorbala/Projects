@@ -26,6 +26,7 @@ vim.opt.listchars = {
 }
 require('indent_blankline').setup {
   show_end_of_line = true,
+  show_trailing_blankline_indent = false,
 }
 
 -- Gitsigns
