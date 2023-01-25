@@ -133,8 +133,8 @@ int GetScore(int myitem, int opponent) {
 }
 
 int main(int argc, const char * argv[]) {
-    auto start = chrono::system_clock::now();
     auto && [fname] = ParseProgramArguments(argc, argv); // NOLINT [-Wc++17-extensions]
+    auto start = chrono::system_clock::now();
     vector <std::pair<char, char>> inpList = ReadInputFile(fname);
 
     PLAYER1['A'] = ROCK;
