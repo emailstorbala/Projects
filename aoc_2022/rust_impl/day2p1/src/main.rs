@@ -1,7 +1,3 @@
-extern crate lazy_static;
-
-use lazy_static::lazy_static;
-use std::collections::HashMap;
 use std::{fs, char};
 use std::time::Instant;
 
@@ -13,27 +9,19 @@ const WIN_BONUS: i32 = 6;
 const DRAW_BONUS: i32 = 3;
 const LOSE_BONUS: i32 = 0;
 
-lazy_static! {
-    static ref OPPONENT: HashMap<char, i32> = {
-        let mut map = HashMap::new();
-        map.insert('A', ROCK);
-        map.insert('B', PAPER);
-        map.insert('C', SCISSORS);
-        map
-    };
-    static ref MINE: HashMap<char, i32> = {
-        let mut map = HashMap::new();
-        map.insert('X', ROCK);
-        map.insert('Y', PAPER);
-        map.insert('Z', SCISSORS);
-        map
-    };
+fn item_value(item: char) -> i32 {
+    match item {
+        'A' | 'X' => ROCK,
+        'B' | 'Y' => PAPER,
+        'C' | 'Z' => SCISSORS,
+        _ => panic!("Invalid item sent"),
+    }
 }
 
 fn get_score(opp: char, mine: char) -> i32 {
     let mut res: i32 = 0;
-    let &opp_val = OPPONENT.get(&opp).unwrap();
-    let &my_val = MINE.get(&mine).unwrap();
+    let opp_val = item_value(opp);
+    let my_val = item_value(mine);
 
     if opp_val == my_val {
         // Draw case
