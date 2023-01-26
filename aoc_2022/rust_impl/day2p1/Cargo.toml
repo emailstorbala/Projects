@@ -8,13 +8,12 @@ authors = ["emailstorbala@gmail.com"]
 opt-level = 0
 debug = false
 panic = 'unwind'
-overflow_checks = true
 
 [profile.release]
-strip = "debuginfo"
-opt-level = 3
+strip = true
+opt-level = "s"
+#lto = true
 debug = false
-overflow_checks = false
 panic = 'unwind'
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
