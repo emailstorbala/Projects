@@ -17,14 +17,16 @@ fn get_compartment_details(file_contents: &str) -> Vec<(String, String)> {
     return compartment_details;
 }
 
-fn get_char_priority(item: char) -> u32 {
+fn get_item_priority(item: char) -> u32 {
     let priority: u32;
     if item as u32 >= 65 && item as u32 <= 90 {
         // Capital letter case
         priority = item as u32 - 65 + 27;
-    } else {
+    } else if item as u32 >= 97 && item as u32 <= 122 {
         // lower letter case should come here
         priority = item as u32 - 96;
+    } else {
+        panic!("Invalid item '{}' in input file!", item);
     }
 
     priority
@@ -38,16 +40,16 @@ fn main() {
     let mut total_priority: u32 = 0;
 
     for (comp1, comp2) in compartment_details {
-        let mut common_items: Vec<char> = Vec::new();
+        let mut common_items: String = String::from("");
         for item in comp1.chars() {
-            if comp2.contains(item) && !common_items.contains(&item) {
+            if comp2.contains(item) && !common_items.contains(item) {
                 common_items.push(item);
             }
         }
 
         /* println!("Common items is {:?}", common_items); */
-        for item in common_items {
-            total_priority += get_char_priority(item);
+        for item in common_items.chars() {
+            total_priority += get_item_priority(item);
         }
     }
 
