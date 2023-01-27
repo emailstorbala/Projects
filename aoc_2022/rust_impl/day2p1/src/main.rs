@@ -1,42 +1,44 @@
-use std::{fs, char};
 use std::time::Instant;
+use std::{char, fs};
 
-const ROCK: i32 = 1;
-const PAPER: i32 = 2;
-const SCISSORS: i32 = 3;
+#[derive(PartialEq, Eq)]
+enum Objects {
+    ROCK = 1,
+    PAPER = 2,
+    SCISSORS = 3,
+}
 
 const WIN_BONUS: i32 = 6;
 const DRAW_BONUS: i32 = 3;
 const LOSE_BONUS: i32 = 0;
 
-fn item_value(item: char) -> i32 {
+fn item_value(item: char) -> Objects {
     match item {
-        'A' | 'X' => ROCK,
-        'B' | 'Y' => PAPER,
-        'C' | 'Z' => SCISSORS,
+        'A' | 'X' => Objects::ROCK,
+        'B' | 'Y' => Objects::PAPER,
+        'C' | 'Z' => Objects::SCISSORS,
         _ => panic!("Invalid item sent"),
     }
 }
 
-fn get_score(opp: char, mine: char) -> i32 {
+fn get_score(opp_val: Objects, my_val: Objects) -> i32 {
     let mut res: i32 = 0;
-    let opp_val = item_value(opp);
-    let my_val = item_value(mine);
 
     if opp_val == my_val {
         // Draw case
-        res += opp_val + DRAW_BONUS;
-    } else if (opp_val == ROCK && my_val == SCISSORS)
-        || (opp_val == SCISSORS && my_val == PAPER)
-        || (opp_val == PAPER && my_val == ROCK) {
+        res += opp_val as i32 + DRAW_BONUS;
+    } else if (opp_val == Objects::ROCK && my_val == Objects::SCISSORS)
+        || (opp_val == Objects::SCISSORS && my_val == Objects::PAPER)
+        || (opp_val == Objects::PAPER && my_val == Objects::ROCK)
+    {
         // Losing case
-        res += my_val + LOSE_BONUS;
+        res += my_val as i32 + LOSE_BONUS;
     } else {
         // Winning case
-        res += my_val + WIN_BONUS;
+        res += my_val as i32 + WIN_BONUS;
     }
 
-    return res;
+    res
 }
 
 fn main() {
@@ -53,7 +55,7 @@ fn main() {
 
     let mut tot_score: i32 = 0;
     for pair in ctx {
-        tot_score += get_score(pair.0, pair.1);
+        tot_score += get_score(item_value(pair.0), item_value(pair.1));
     }
     println!("Total score is {}", tot_score);
     let duration = start_time.elapsed();
