@@ -20,7 +20,7 @@ local servers = {
   clangd = {},
   jedi_language_server= {},
   --gopls = {},
-  --rust_analyzer = {},
+  rust_analyzer = {},
   -- tsserver = {},
 
   sumneko_lua = {
