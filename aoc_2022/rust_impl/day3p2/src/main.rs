@@ -48,10 +48,8 @@ fn main() {
     let start_time = Instant::now();
     let contents = fs::read_to_string("inp_file.txt").expect("Unable to load the file!");
 
-    let total_common_chars: String = get_group_common_items(&contents);
-
     let mut total_priority: u32 = 0;
-    for item in total_common_chars.chars() {
+    for item in get_group_common_items(&contents).chars() {
         total_priority += get_item_priority(item);
     }
 
