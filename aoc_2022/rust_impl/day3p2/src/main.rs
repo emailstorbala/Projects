@@ -5,9 +5,9 @@ fn get_group_common_items(file_contents: &str) -> String {
     let mut total_common_chars: String = String::from("");
     let mut tmp_grp: Vec<String> = Vec::new();
 
-    for chunk_rec in file_contents.split('\n') {
-        if !chunk_rec.is_empty() {
-            tmp_grp.push(chunk_rec.clone().to_string());
+    for record in file_contents.split('\n') {
+        if !record.is_empty() {
+            tmp_grp.push(record.to_string());
             if tmp_grp.len() == 3 {
                 let comp1: String = tmp_grp.iter().nth(0).unwrap().to_string();
                 let comp2: String = tmp_grp.iter().nth(1).unwrap().to_string();
