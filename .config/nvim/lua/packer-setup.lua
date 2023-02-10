@@ -56,7 +56,8 @@ require('packer').startup(function(use)
   use 'dhruvasagar/vim-table-mode'
   use 'rodjek/vim-puppet'
   use 'hashicorp/terraform-ls'
-  use 'preservim/nerdtree'
+
+  use { 'preservim/nerdtree', requires = { 'ryanoasis/vim-devicons' } }
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
