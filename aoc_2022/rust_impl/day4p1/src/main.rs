@@ -1,7 +1,7 @@
+use clap::Parser;
 use std::collections::HashSet;
 use std::fs;
 use std::time::Instant;
-use clap::Parser;
 
 /// Simple program to greet a person
 #[derive(Parser, Debug)]
@@ -37,9 +37,10 @@ fn get_ranges_list(contents: &str) -> Vec<(HashSet<i32>, HashSet<i32>)> {
                 pl2.split('-').nth(1).unwrap().parse::<i32>().unwrap(),
             );
 
-            ret_assignments.push(
-                (get_hash_set(pl1_beg, pl1_end), get_hash_set(pl2_beg, pl2_end))
-            );
+            ret_assignments.push((
+                get_hash_set(pl1_beg, pl1_end),
+                get_hash_set(pl2_beg, pl2_end),
+            ));
         }
     }
 
