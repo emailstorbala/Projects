@@ -104,18 +104,8 @@ fn main() {
     let contents = fs::read_to_string(&args.file_name).expect("Unable to load the file!");
     let mut crate_dtls: CrateDetails = get_all_crate_dtls(&contents);
 
-    // for (num_of_crates, from_pos, to_pos) in crate_dtls.crate_insts.to_owned() {
-    //     println!("num_of_crates, from_pos, to_pos -> ({}, {}, {})", num_of_crates, from_pos, to_pos);
-    // }
-    //
-    // for (idx, items) in crate_dtls.crate_info.to_owned() {
-    //     println!("idx, item -> ({idx}, {:?})", items);
-    // }
-
     crate_dtls.execute_instructions();
 
-    // println!();
-    // println!("Instructions applied");
     // for (idx, items) in crate_dtls.crate_info.to_owned() {
     //     println!("idx, item -> ({idx}, {:?})", items);
     // }
