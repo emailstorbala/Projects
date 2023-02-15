@@ -47,9 +47,7 @@ require('packer').startup(function(use)
 
   -- Git related plugins
   use 'lewis6991/gitsigns.nvim'
-
-  use 'morhetz/gruvbox'
-  use 'joshdick/onedark.vim'
+  use 'joshdick/onedark.vim' -- Color theme
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
