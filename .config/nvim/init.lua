@@ -1,3 +1,4 @@
+require('base-setup')
 require('packer-setup')
 
 -- Automatically source and re-compile packer whenever you save this init.lua
@@ -22,19 +23,11 @@ local servers = {
   --gopls = {},
   rust_analyzer = {},
   -- tsserver = {},
-
-  sumneko_lua = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
 }
 
 -- Setup neovim lua configuration
 require('neodev').setup()
 
---
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -59,7 +52,7 @@ mason_lspconfig.setup_handlers {
   end,
 }
 
-require('lspconfig').sumneko_lua.setup {
+require('lspconfig').lua_ls.setup {
   settings = {
     Lua = {
       diagnostics = {
@@ -74,7 +67,7 @@ require('lspconfig').sumneko_lua.setup {
 require('fidget').setup()
 
 require('cmp-setup')
-require('base-setup')
+require('color')
 require('keymap-setup')
 
 -- The line beneath this is called `modeline`. See `:help modeline`

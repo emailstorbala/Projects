@@ -10,9 +10,6 @@ vim.opt.autoindent = true
 vim.opt.smartindent = true
 vim.opt.shiftround = true
 
--- Set colorscheme
-vim.cmd [[colorscheme onedark]]
-
 -- Enable highlight search
 vim.o.hlsearch = true
 
