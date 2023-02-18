@@ -34,10 +34,8 @@ impl CrateDetails {
             if item.is_uppercase() {
                 if self.crate_info.contains_key(&idx) {
                     self.crate_info.get_mut(&idx).unwrap().insert(0, item);
-                    // self.crate_info.get_mut(idx).unwrap().to_owned() = tmp_crates.to_vec();
                 } else {
-                    let tmp_crates: Vec<char> = Vec::from([item]);
-                    self.crate_info.insert(idx, tmp_crates.to_vec());
+                    self.crate_info.insert(idx, [item].to_vec());
                 }
             }
 
@@ -58,17 +56,14 @@ impl CrateDetails {
 
     fn execute_instructions(&mut self) {
         for (num_of_crates, from_pos, to_pos) in self.crate_insts[..].to_owned() {
-            let mut tmp_crates: Vec<char> = Vec::new();
-            for _ in 1..=num_of_crates {
-                let tmp_crate: char = self.crate_info.get_mut(&from_pos).unwrap().pop().unwrap();
-                tmp_crates.insert(0, tmp_crate);
-            }
+            let tmp_idx: usize = self.crate_info.get_mut(&from_pos).unwrap().len() - num_of_crates as usize;
+            let mut tmp_crates: Vec<char> = self.crate_info.get_mut(&from_pos).unwrap().drain(tmp_idx..).collect();
             self.crate_info.get_mut(&to_pos).unwrap().append(&mut tmp_crates);
         }
     }
 
     fn get_result(&self) -> String {
-        let mut res: String = String::from("");
+        let mut res: String = "".to_string();
         for idx in 1..=(self.crate_info.len() as i32) {
             let item: char = *self.crate_info[&idx].last().unwrap();
             res.push(item);
@@ -105,10 +100,6 @@ fn main() {
     let mut crate_dtls: CrateDetails = get_all_crate_dtls(&contents);
 
     crate_dtls.execute_instructions();
-
-    // for (idx, items) in crate_dtls.crate_info.to_owned() {
-    //     println!("idx, item -> ({idx}, {:?})", items);
-    // }
 
     let result: &str = &crate_dtls.get_result().to_owned();
     println!("Result is {result}");
