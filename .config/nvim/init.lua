@@ -1,3 +1,4 @@
+require('base-setup')
 require('lspconfig').lua_ls.setup {
   settings = {
     Lua = {
@@ -9,7 +10,6 @@ require('lspconfig').lua_ls.setup {
   },
 }
 
-require('base-setup')
 require('packer-setup')
 
 -- Automatically source and re-compile packer whenever you save this init.lua
