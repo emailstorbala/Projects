@@ -1,5 +1,4 @@
 require('lualine-setup')
-require'lspconfig'.terraformls.setup{}
 
 -- Enable Comment.nvim
 require('Comment').setup()
