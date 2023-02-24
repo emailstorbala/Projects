@@ -1,16 +1,4 @@
 require('base-setup')
-require('lspconfig').lua_ls.setup {
-  settings = {
-    Lua = {
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
-      },
-    },
-  },
-}
-
-require('packer-setup')
 
 -- Automatically source and re-compile packer whenever you save this init.lua
 local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
