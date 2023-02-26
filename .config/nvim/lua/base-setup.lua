@@ -20,14 +20,8 @@ vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 vim.opt.shiftround = true
 
--- Enable mouse mode
-vim.o.mouse = 'a'
-vim.opt.mouse = 'a'
-
 -- Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
+vim.opt.ignorecase = true
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
 vim.opt.completeopt = 'menuone,noselect'
