@@ -63,12 +63,10 @@ fn read_contents(content: &str) -> HashMap<String, Vec<String>> {
 
                 // Change directory
                 parent_dir = line.split_whitespace().nth(2).unwrap().to_string();
-                if parent_dir == "/" {
-                    dir_list.clear();
-                } else if parent_dir == ".." {
-                    parent_dir = dir_list.pop().unwrap();
-                } else {
-                    dir_list.push(parent_dir.clone());
+                match parent_dir.as_str() {
+                    "/" => dir_list = ["/".to_string()].to_vec(),
+                    ".." => parent_dir = dir_list.pop().unwrap(),
+                    _ => dir_list.push(parent_dir.clone())
                 }
             }
             continue;
