@@ -46,7 +46,7 @@ fn read_contents(content: &str) -> HashMap<String, Vec<String>> {
 
     let mut dir_dtls: Vec<String> = Vec::new();
     let mut dir_dtls_map: HashMap<String, Vec<String>> = HashMap::new();
-    let mut dir_list: Vec<String> = Vec::new();
+    let mut dir_stack: Vec<String> = Vec::new();
 
     for line in content.split('\n') {
         if line.is_empty() {
@@ -64,9 +64,12 @@ fn read_contents(content: &str) -> HashMap<String, Vec<String>> {
                 // Change directory
                 parent_dir = line.split_whitespace().nth(2).unwrap().to_string();
                 match parent_dir.as_str() {
-                    "/" => dir_list = ["/".to_string()].to_vec(),
-                    ".." => parent_dir = dir_list.pop().unwrap(),
-                    _ => dir_list.push(parent_dir.clone())
+                    "/" => dir_stack = ["/".to_string()].to_vec(),
+                    ".." => {
+                        dir_stack.pop().unwrap();
+                        parent_dir = dir_stack[dir_stack.len() - 1].to_string();
+                    },
+                    _ => dir_stack.push(parent_dir.clone())
                 }
             }
             continue;
