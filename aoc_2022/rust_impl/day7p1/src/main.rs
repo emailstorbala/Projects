@@ -25,7 +25,13 @@ fn get_directory_size(dir: &str, dir_dtls_map: &HashMap<String, Vec<String>>) ->
                 .unwrap()
                 .to_owned()
                 .to_string();
-            dir_size += get_directory_size(&tmp_dir, dir_dtls_map);
+            let abs_dir: String = if dir.ends_with('/') {
+                format!("{}{}", dir, tmp_dir)
+            } else {
+                format!("{}/{}", dir, tmp_dir)
+            };
+
+            dir_size += get_directory_size(&abs_dir, dir_dtls_map);
         } else {
             // File case
             let file_size: u64 = item
@@ -42,7 +48,7 @@ fn get_directory_size(dir: &str, dir_dtls_map: &HashMap<String, Vec<String>>) ->
 }
 
 fn read_contents(content: &str) -> HashMap<String, Vec<String>> {
-    let mut parent_dir: String = "".to_string();
+    let mut curr_dir: String = "".to_string();
 
     let mut dir_dtls: Vec<String> = Vec::new();
     let mut dir_dtls_map: HashMap<String, Vec<String>> = HashMap::new();
@@ -57,19 +63,30 @@ fn read_contents(content: &str) -> HashMap<String, Vec<String>> {
             // This is a command
             if line.starts_with("$ cd ") {
                 if !dir_dtls.is_empty() {
-                    dir_dtls_map.insert(parent_dir, dir_dtls.to_owned());
+                    dir_dtls_map.insert(curr_dir.clone(), dir_dtls.to_owned());
                 }
                 dir_dtls.clear();
 
                 // Change directory
-                parent_dir = line.split_whitespace().nth(2).unwrap().to_string();
-                match parent_dir.as_str() {
-                    "/" => dir_stack = ["/".to_string()].to_vec(),
+                let prev_dir: String = curr_dir.to_owned();
+                let tmp_dir: String = line.split_whitespace().nth(2).unwrap().to_string();
+                match tmp_dir.as_str() {
+                    "/" => {
+                        curr_dir = "/".to_string();
+                        dir_stack.push(curr_dir.clone());
+                    },
                     ".." => {
                         dir_stack.pop().unwrap();
-                        parent_dir = dir_stack[dir_stack.len() - 1].to_string();
+                        curr_dir = dir_stack[dir_stack.len() - 1].to_string();
                     },
-                    _ => dir_stack.push(parent_dir.clone())
+                    _ => {
+                        if prev_dir.ends_with("/") {
+                            curr_dir = format!("{}{}", prev_dir, tmp_dir);
+                        } else {
+                            curr_dir = format!("{}/{}", prev_dir, tmp_dir);
+                        }
+                        dir_stack.push(curr_dir.clone());
+                    }
                 }
             }
             continue;
@@ -80,7 +97,7 @@ fn read_contents(content: &str) -> HashMap<String, Vec<String>> {
     }
 
     if !dir_dtls.is_empty() {
-        dir_dtls_map.insert(parent_dir, dir_dtls.to_owned());
+        dir_dtls_map.insert(curr_dir, dir_dtls.to_owned());
     }
 
     dir_dtls_map
@@ -105,6 +122,7 @@ fn main() {
     let content = fs::read_to_string(&args.file_name).expect("Unable to load the file!");
 
     let dir_dtls_map: HashMap<String, Vec<String>> = read_contents(&content);
+    // println!("dir_dtls_map -> {:?}", dir_dtls_map);
     let result: u64 = get_dirs_to_match_expected(&dir_dtls_map, args.exp_size);
     println!("Result is {result}");
 
