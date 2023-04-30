@@ -50,10 +50,8 @@ def do_arg_parse():
     """
     desc = "Downloading entire pip packages for the specified pakages"
     parser = argparse.ArgumentParser(description=desc)
-    parser.add_argument("-p", "--pkg_list", required=True,
-                        help="Input package list")
-    parser.add_argument("-r", "--pkg_repo", required=True,
-                        help="Output pip repository")
+    parser.add_argument("-p", "--pkg_list", required=True, help="Input package list")
+    parser.add_argument("-r", "--pkg_repo", required=True, help="Output pip repository")
 
     return parser.parse_args()
 
@@ -64,9 +62,9 @@ def main():
     args = do_arg_parse()
 
     if not os.path.exists(args.pkg_list):
-        raise Exception("Input file doesn't exists")
+        raise FileNotFoundError("Input file doesn't exists")
     elif os.path.isdir(args.pkg_list):
-        raise Exception("Input file is a directory")
+        raise OSError("Input file is a directory")
 
     with open(args.pkg_list) as f_hdl:
         lines = f_hdl.readlines()
@@ -82,10 +80,9 @@ def main():
         try:
             url = "https://pypi.org/simple/{}/".format(pkg)
             parser = MyHTMLParser()
-            stream = urllib.request.urlopen(url)
-            pkg_url_map[pkg] = gen_links(stream, parser)
-        except Exception as ex:
-            print("Exception -> {}".format(ex))
+            with urllib.request.urlopen(url) as stream:
+                pkg_url_map[pkg] = gen_links(stream, parser)
+        except Exception:
             continue
 
     for pkg, urls in pkg_url_map.items():
