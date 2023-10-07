@@ -3,6 +3,7 @@
 
 #include <map>
 #include <memory>
+#include <string>
 #include "Concurrent.h"
 
 class FileDetails {
@@ -10,7 +11,7 @@ class FileDetails {
 
     public:
     FileDetails(void) = delete;
-    explicit FileDetails(const char * _file);
+    explicit FileDetails(const std::string & _file);
     void CalculateAndUpdateFileDetails(std::shared_ptr<Concurrent> cPtr);
 };
 

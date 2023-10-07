@@ -10,9 +10,10 @@ class Concurrent {
     long allFileLines = 0;
     std::mutex concMutex;
 
+    void PrintFileDetails(const std::string & _file);
+
     public:
         Concurrent(void) {};
         bool UpdateFileDetails(const std::string &_file, const long &_loc);
-        void PrintFileDetails(const std::string & _file);
 };
 #endif

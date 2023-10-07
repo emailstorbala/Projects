@@ -3,7 +3,7 @@ EXECUTABLE = FileDetails
 CFLAGS = -Wall -s -O3 -std=c++17
 LFLAGS = -s
 CC = g++
-LIBS=-lboost_program_options -lpthread
+LIBS=-lboost_program_options -lpthread -lfmt
 
 all:    $(EXECUTABLE)
 

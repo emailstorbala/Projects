@@ -2,15 +2,12 @@
 #include <fstream>
 #include "FileDetails.h"
 
-using std::cout;
-using std::cerr;
-using std::endl;
 using std::string;
 using std::ifstream;
 
-bool FileExists(const char * _file) {
+bool FileExists(const string & _file) {
     ifstream fileStream;
-    if (fileStream.open(_file, std::ios::in); fileStream.is_open()) {
+    if (fileStream.open((char *)_file.c_str(), std::ios::in); fileStream.is_open()) {
         fileStream.close();
         return true;
     }
@@ -18,7 +15,7 @@ bool FileExists(const char * _file) {
     return false;
 }
 
-FileDetails::FileDetails(const char * _file) {
+FileDetails::FileDetails(const string & _file) {
     if (!FileExists(_file)) {
         string err_msg = "File doesn't exists or permission denied for '" + string(_file) + "'";
         throw std::runtime_error(err_msg);

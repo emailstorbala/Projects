@@ -1,10 +1,12 @@
 #include <fstream>
 #include <iostream>
+#include <iterator>
 #include <memory>
 #include <thread>
 #include <tuple>
 #include <vector>
 #include <chrono>
+#include <fmt/core.h>
 #include <boost/program_options.hpp>
 #include "FileDetails.h"
 #include "Concurrent.h"
@@ -41,14 +43,14 @@ tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
         store(parse_command_line(argc, argv, prgDesc), vm);
 
         if (vm.count("help") || vm.count("h")) {
-            cout << prgDesc << endl;
+            std::cout << prgDesc << std::endl;
             exit(0);
         }
 
         notify(vm);
     } catch (const error &ex) {
-        cerr << "Exception: '" << ex.what() << endl;
-        cout << prgDesc << endl;
+        std::cerr << "Exception: '" << ex.what() << std::endl;
+        std::cout << prgDesc << std::endl;
         exit(3);
     }
 
@@ -70,24 +72,29 @@ int main(int argc, const char * argv[]) {
             }
         } catch (const std::runtime_error & err) {
             fileStream.close();
-            cout << "Runtime error occured: " << err.what() << endl;
+            fmt::print("Runtime error occured: {}\n", err.what());
             throw;
         }
         fileStream.close();
     } else {
-        string err_msg = "File doesn't exists or permission denied for '" + string(fName) + "'";
+        string err_msg;
+        fmt::format_to(std::back_inserter(err_msg), "File doesn't exists or permission denied for {}\n", fName);
         throw std::runtime_error(err_msg);
     }
 
-    auto start = chrono::system_clock::now();
+    auto start = chrono::steady_clock::now();
     vector <std::thread> thds;
     std::shared_ptr<Concurrent> concPtr = std::make_shared<Concurrent>();
 
     for (auto && locFile : files) {
         auto locFn = [&locFile] (std::shared_ptr<Concurrent> cPtr) {
-            FileDetails fileDtls = FileDetails((char *)locFile.c_str());
-            fileDtls.CalculateAndUpdateFileDetails(cPtr);
-            cPtr->PrintFileDetails(locFile);
+            try {
+                FileDetails fileDtls = FileDetails(locFile);
+                fileDtls.CalculateAndUpdateFileDetails(cPtr);
+            } catch (std::runtime_error & excp) {
+                fmt::print("Runtime error occured for file '{}': {}\n", locFile, excp.what());
+                return;
+            }
         };
         thds.push_back(std::thread(locFn, concPtr));
         //locFn(concPtr); // Sequential execution
@@ -97,9 +104,9 @@ int main(int argc, const char * argv[]) {
         thd.join();
     }
 
-    auto end = chrono::system_clock::now();
+    auto end = chrono::steady_clock::now();
     auto dur = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
-    cout << "Time taken: " << float(dur / 1000.0) << " mu.secs" << endl;
+    fmt::print("Time taken: {} mu.secs\n", dur/1000.0);
 
     return 0;
 }
