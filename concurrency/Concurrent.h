@@ -5,15 +5,13 @@
 #include <mutex>
 
 class Concurrent {
-    std::map <std::string, long> fileLineDetails;
-    std::string currentFile;
-    long allFileLines = 0;
+    std::map <std::string, std::string> dnsDetails;
     std::mutex concMutex;
 
-    void PrintFileDetails(const std::string & _file);
 
     public:
         Concurrent(void) {};
-        bool UpdateFileDetails(const std::string &_file, const long &_loc);
+        bool UpdateDNSDetails(const std::string & dnsName, const std::string & ipAddress);
+        void PrintDNSDetails(const std::string & dnsName);
 };
 #endif

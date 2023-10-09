@@ -8,7 +8,7 @@
 #include <chrono>
 #include <fmt/core.h>
 #include <boost/program_options.hpp>
-#include "FileDetails.h"
+#include "DNSDetails.h"
 #include "Concurrent.h"
 
 using std::cout;
@@ -60,7 +60,7 @@ tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
 int main(int argc, const char * argv[]) {
     auto && [fName] = ParseProgramArguments(argc, argv);
 
-    vector<string> files;
+    vector<string> dnsNames;
     ifstream fileStream;
     fileStream.open((const char *)fName.c_str(), std::ios::in);
 
@@ -68,7 +68,7 @@ int main(int argc, const char * argv[]) {
         try {
             string line;
             while (getline(fileStream, line)) {
-                files.push_back(std::move(line));
+                dnsNames.push_back(std::move(line));
             }
         } catch (const std::runtime_error & err) {
             fileStream.close();
@@ -86,18 +86,17 @@ int main(int argc, const char * argv[]) {
     vector <std::thread> thds;
     std::shared_ptr<Concurrent> concPtr = std::make_shared<Concurrent>();
 
-    for (auto && locFile : files) {
-        auto locFn = [&locFile] (std::shared_ptr<Concurrent> cPtr) {
+    for (auto && dnsName: dnsNames) {
+        auto locFn = [&dnsName] (std::shared_ptr<Concurrent> cPtr) {
             try {
-                FileDetails fileDtls = FileDetails(locFile);
-                fileDtls.CalculateAndUpdateFileDetails(cPtr);
+                DNSDetails dnsDtls = DNSDetails(dnsName);
+                dnsDtls.CalculateAndUpdateFileDetails(cPtr);
             } catch (std::runtime_error & excp) {
-                fmt::print("Runtime error occured for file '{}': {}\n", locFile, excp.what());
+                fmt::print("Runtime error occured for dnsName '{}': {}\n", dnsName, excp.what());
                 return;
             }
         };
         thds.push_back(std::thread(locFn, concPtr));
-        //locFn(concPtr); // Sequential execution
     }
 
     for (auto && thd: thds) {

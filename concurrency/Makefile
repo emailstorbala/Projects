@@ -1,5 +1,5 @@
-OBJS = FileDetails.o Concurrent.o main.o
-EXECUTABLE = FileDetails
+OBJS = DNSDetails.o Concurrent.o main.o
+EXECUTABLE = DNSDetails
 CFLAGS = -Wall -s -O3 -std=c++17
 LFLAGS = -s
 CC = g++

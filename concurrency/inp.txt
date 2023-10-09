@@ -1,12 +1,3 @@
-/usr/share/perl/5.30.3/DB.pm
-/usr/share/bash-completion/bash_completion
-/usr/share/alsa/alsa.conf
-/usr/share/alsa/pulse-alsa.conf
-/etc/skel/.bashrc
-/usr/share/doc/libreoffice-common/access2base.html
-/usr/share/doc/libsane-common/sane-backends.html
-/usr/share/doc/libsane-common/sane-mfgs-external.html
-/usr/share/doc/libsane-common/sane-mfgs.html
-/usr/share/doc/python3-logilab-common/html/logilab.common.html
-/usr/share/teams/LICENSES.chromium.html
-/usr/share/texlive/doc.html
+testcontroller.eng.velocix.com
+dashboard.eng.velocix.com
+artifactory.eng.velocix.com
