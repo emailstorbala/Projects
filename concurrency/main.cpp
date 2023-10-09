@@ -11,10 +11,6 @@
 #include "DNSDetails.h"
 #include "Concurrent.h"
 
-using std::cout;
-using std::cerr;
-using std::endl;
-using std::endl;
 using std::string;
 using std::tuple;
 using std::vector;
@@ -102,6 +98,8 @@ int main(int argc, const char * argv[]) {
     for (auto && thd: thds) {
         thd.join();
     }
+
+    concPtr->PrintSummary();
 
     auto end = chrono::steady_clock::now();
     auto dur = chrono::duration_cast<chrono::nanoseconds>(end - start).count();

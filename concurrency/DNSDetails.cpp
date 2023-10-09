@@ -24,7 +24,7 @@ void DNSDetails::getDnsIP(void) {
     int s = getaddrinfo(dnsName.c_str(), NULL, &hints, &result);
     if (s != 0) {
         string errMsg;
-        fmt::format_to(std::back_inserter(errMsg), "Invalid hostname '{}' provided!", dnsName);
+        fmt::format_to(std::back_inserter(errMsg), "{}: getaddrinfo: {}\n", dnsName, gai_strerror(s));
         throw std::runtime_error(errMsg);
     }
 
@@ -33,12 +33,14 @@ void DNSDetails::getDnsIP(void) {
         char ipstr[INET6_ADDRSTRLEN];
         inet_ntop(rp->ai_family, (void *)(&ipv4->sin_addr), ipstr, sizeof ipstr);
         this->ipAddress = ipstr;
+
+        if (!this->ipAddress.empty()) break;
     }
     freeaddrinfo(result);
 
-    if (ipAddress.empty()) {
+    if (this->ipAddress.empty()) {
         string errMsg;
-        fmt::format_to(std::back_inserter(errMsg), "Unknown issue. Unable to get the associate ip address for '{}'!", dnsName);
+        fmt::format_to(std::back_inserter(errMsg), "Unknown issue. Unable to get the associated ip address for '{}'!", dnsName);
         throw std::runtime_error(errMsg);
     }
 }
@@ -48,8 +50,11 @@ DNSDetails::DNSDetails(const string & dnsName) {
 }
 
 void DNSDetails::CalculateAndUpdateFileDetails(std::shared_ptr<Concurrent> cPtr) {
-
-    this->getDnsIP();
-    cPtr->UpdateDNSDetails(this->dnsName, this->ipAddress);
+    try {
+        this->getDnsIP();
+        cPtr->UpdateDNSDetails(this->dnsName, this->ipAddress);
+    } catch (std::runtime_error & err) {
+        fmt::print("Exception occured: {}\n", err.what());
+        cPtr->UpdateDNSDetails(this->dnsName);
+    }
 }
-
