@@ -1,10 +1,8 @@
 #ifndef __DNS_DETAILS_H__
 #define __DNS_DETAILS_H__
 
-#include <map>
 #include <memory>
 #include <string>
-#include <vector>
 #include "Concurrent.h"
 
 class DNSDetails {
