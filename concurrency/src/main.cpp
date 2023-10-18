@@ -1,3 +1,8 @@
+#include "Concurrent.h"
+#include "DNSDetails.h"
+#include <boost/program_options.hpp>
+#include <chrono>
+#include <fmt/core.h>
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -5,36 +10,30 @@
 #include <thread>
 #include <tuple>
 #include <vector>
-#include <chrono>
-#include <fmt/core.h>
-#include <boost/program_options.hpp>
-#include "DNSDetails.h"
-#include "Concurrent.h"
 
+using std::ifstream;
 using std::string;
 using std::tuple;
 using std::vector;
-using std::ifstream;
 
 namespace chrono = std::chrono;
 
+using boost::program_options::error;
 using boost::program_options::notify;
+using boost::program_options::options_description;
 using boost::program_options::parse_command_line;
 using boost::program_options::store;
-using boost::program_options::variables_map;
-using boost::program_options::options_description;
 using boost::program_options::value;
-using boost::program_options::error;
+using boost::program_options::variables_map;
 
-tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
+tuple<string> ParseProgramArguments(const int argc, const char *argv[]) {
     string filename;
     variables_map vm;
     options_description prgDesc{"Usage"};
 
     try {
-        prgDesc.add_options()
-            ("help, h", "Help screen")
-            ("i", value<string>(&filename)->required(), "Input File");
+        prgDesc.add_options()("help, h", "Help screen")(
+            "i", value<string>(&filename)->required(), "Input File");
 
         store(parse_command_line(argc, argv, prgDesc), vm);
 
@@ -53,8 +52,8 @@ tuple<string> ParseProgramArguments(const int argc, const char * argv[]) {
     return make_tuple(filename);
 }
 
-int main(int argc, const char * argv[]) {
-    auto && [fName] = ParseProgramArguments(argc, argv);
+int main(int argc, const char *argv[]) {
+    auto &&[fName] = ParseProgramArguments(argc, argv);
 
     vector<string> dnsNames;
     ifstream fileStream;
@@ -66,7 +65,7 @@ int main(int argc, const char * argv[]) {
             while (getline(fileStream, line)) {
                 dnsNames.push_back(std::move(line));
             }
-        } catch (const std::runtime_error & err) {
+        } catch (const std::runtime_error &err) {
             fileStream.close();
             fmt::print("Runtime error occured: {}\n", err.what());
             throw;
@@ -74,28 +73,31 @@ int main(int argc, const char * argv[]) {
         fileStream.close();
     } else {
         string err_msg;
-        fmt::format_to(std::back_inserter(err_msg), "File doesn't exists or permission denied for {}\n", fName);
+        fmt::format_to(std::back_inserter(err_msg),
+                       "File doesn't exists or permission denied for {}\n",
+                       fName);
         throw std::runtime_error(err_msg);
     }
 
     auto start = chrono::steady_clock::now();
-    vector <std::thread> thds;
+    vector<std::thread> thds;
     std::shared_ptr<Concurrent> concPtr = std::make_shared<Concurrent>();
 
-    for (auto && dnsName: dnsNames) {
-        auto locFn = [&dnsName] (std::shared_ptr<Concurrent> cPtr) {
+    for (auto &&dnsName : dnsNames) {
+        auto locFn = [&dnsName](std::shared_ptr<Concurrent> cPtr) {
             try {
                 DNSDetails dnsDtls = DNSDetails(dnsName);
                 dnsDtls.CalculateAndUpdateFileDetails(cPtr);
-            } catch (std::runtime_error & excp) {
-                fmt::print("Runtime error occured for dnsName '{}': {}\n", dnsName, excp.what());
+            } catch (std::runtime_error &excp) {
+                fmt::print("Runtime error occured for dnsName '{}': {}\n",
+                           dnsName, excp.what());
                 return;
             }
         };
         thds.push_back(std::thread(locFn, concPtr));
     }
 
-    for (auto && thd: thds) {
+    for (auto &&thd : thds) {
         thd.join();
     }
 
@@ -103,7 +105,7 @@ int main(int argc, const char * argv[]) {
 
     auto end = chrono::steady_clock::now();
     auto dur = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
-    fmt::print("Time taken: {} mu.secs\n", dur/1000.0);
+    fmt::print("Time taken: {} mu.secs\n", dur / 1000.0);
 
     return 0;
 }

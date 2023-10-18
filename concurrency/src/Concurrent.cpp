@@ -3,8 +3,9 @@
 
 using std::string;
 
-void Concurrent::UpdateDNSDetails(const string & dnsName, const string & ipAddress) {
-    std::lock_guard <std::mutex> lock(this->concMutex);
+void Concurrent::UpdateDNSDetails(const string &dnsName,
+                                  const string &ipAddress) {
+    std::lock_guard<std::mutex> lock(this->concMutex);
 
     if (!ipAddress.empty()) {
         this->dnsDetails[dnsName] = ipAddress;
@@ -15,8 +16,9 @@ void Concurrent::UpdateDNSDetails(const string & dnsName, const string & ipAddre
     }
 }
 
-void Concurrent::PrintDNSDetails(const string & dnsName) {
-    fmt::print("IP Address for dnsName '{}' is {}\n", dnsName, this->dnsDetails[dnsName]);
+void Concurrent::PrintDNSDetails(const string &dnsName) {
+    fmt::print("IP Address for dnsName '{}' is {}\n", dnsName,
+               this->dnsDetails[dnsName]);
 }
 
 void Concurrent::PrintSummary(void) {
