@@ -27,9 +27,10 @@ def validate [inp_list] {
 def main [...inp_list: string] {
     validate $inp_list
 
-    let backup_directory = ($env.HOME) + "/BackupArchivePath"
+    let backup_directory = $"($env.HOME)/BackupArchivePath"
     let date_time_stamp = (date now | format date "%d-%b-%Y_%H-%M-%S")
-    let target_file_name = $"($backup_directory)/($env.PWD | path basename)_($date_time_stamp).tar.gz"
+    let curr_dir = ($env.PWD | path basename)
+    let target_file_name = $"($backup_directory)/($curr_dir)_($date_time_stamp).tar.gz"
     mkdir $backup_directory
     do_backup $target_file_name $inp_list
 
