@@ -11,8 +11,7 @@ def do_backup [target_file_name: string, inp_list] {
 
 def validate [inp_list] {
     if ($inp_list | length) == 0 {
-        let span = (metadata $inp_list).span;
-        error make {msg: $"No input files/directories provided!", label: {text: "Error here", span: $span } }
+        error make {msg: "No input files/directories provided!"}
     }
 
     for item in $inp_list {
