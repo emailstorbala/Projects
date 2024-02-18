@@ -4,7 +4,7 @@
 [core]
     editor = nvim
 [pull]
-    rebase = true
+    rebase = false
 [diff]
     prompt = false
     tool = vimdiff
@@ -17,3 +17,7 @@
 [mergetool "vimdiff"]
     prompt = false
     path = nvim
+[color]
+    ui = auto
+[init]
+    defaultBranch = main
