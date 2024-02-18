@@ -1,5 +1,5 @@
 fn main() {
-    let loc = "H W";
+    let loc = "H W C";
     let my_vec: Vec<char> = loc
         .split(' ')
         .map(|chunk| -> char { chunk.chars().nth(0).unwrap() })
