@@ -1,6 +1,7 @@
 [user]
     name = Balamurugan R
     email = emailstorbala@gmail.com
+	signingkey = /home/balamurugan/.ssh/id_rsa.pub
 [core]
     editor = nvim
 [pull]
@@ -21,3 +22,7 @@
     ui = auto
 [init]
     defaultBranch = main
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
