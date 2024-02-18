@@ -1,27 +1,27 @@
 [user]
-    name = Balamurugan R
-    email = emailstorbala@gmail.com
+	name = Balamurugan R
+	email = emailstorbala@gmail.com
 	signingkey = /home/balamurugan/.ssh/id_rsa.pub
 [core]
-    editor = nvim
+	editor = nvim
 [pull]
-    rebase = false
+	rebase = false
 [diff]
-    prompt = false
-    tool = vimdiff
+	prompt = false
+	tool = vimdiff
 [difftool]
-    prompt = false
-    tool = vimdiff
+	prompt = false
+	tool = vimdiff
 [merge]
-    prompt = false
-    tool = vimdiff
+	prompt = false
+	tool = vimdiff
 [mergetool "vimdiff"]
-    prompt = false
-    path = nvim
+	prompt = false
+	path = nvim
 [color]
-    ui = auto
+	ui = auto
 [init]
-    defaultBranch = main
+	defaultBranch = main
 [commit]
 	gpgsign = true
 [gpg]
