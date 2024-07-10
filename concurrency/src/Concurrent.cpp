@@ -3,8 +3,7 @@
 
 using std::string;
 
-void Concurrent::UpdateDNSDetails(const string &dnsName,
-                                  const string &ipAddress) {
+void Concurrent::UpdateDNSDetails(const string &dnsName, const string &ipAddress) {
     std::lock_guard<std::mutex> lock(this->concMutex);
 
     if (!ipAddress.empty()) {

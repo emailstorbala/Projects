@@ -89,8 +89,7 @@ int main(int argc, const char *argv[]) {
                 DNSDetails dnsDtls = DNSDetails(dnsName);
                 dnsDtls.CalculateAndUpdateFileDetails(cPtr);
             } catch (std::runtime_error &excp) {
-                fmt::print("Runtime error occured for dnsName '{}': {}\n",
-                           dnsName, excp.what());
+                fmt::print("Runtime error occured for dnsName '{}': {}\n", dnsName, excp.what());
                 return;
             }
         };
