@@ -1,3 +1,4 @@
-testcontroller.eng.velocix.com
-dashboard.eng.velocix.com
-artifactory.eng.velocix.com
+testcontroller.ext.velocix.com
+dashboard.ext.velocix.com
+artifactory.ext.velocix.com
+jenkins.ext.velocix.com

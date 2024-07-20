@@ -103,8 +103,8 @@ int main(int argc, const char *argv[]) {
     concPtr->PrintSummary();
 
     auto end = chrono::steady_clock::now();
-    auto dur = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
-    fmt::print("Time taken: {} mu.secs\n", dur / 1000.0);
+    auto dur = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+    fmt::print("Time taken: {} milli.secs\n", dur);
 
     return 0;
 }
