@@ -5,12 +5,15 @@
 # Creation Date : 20-Jan-2024
 
 # Actual backup functionality for the given input file(s) and dir(s)
-def do_backup [target_file_name: string, inp_list] {
+def do_backup [
+    target_file_name: string,
+    inp_list: list<string>
+] {
     run-external "tar" "-czf" $target_file_name ...$inp_list
 }
 
-def validate [inp_list] {
-    if ($inp_list | length) == 0 {
+def validate [inp_list: list<string>] {
+    if ($inp_list | is-empty) {
         error make {msg: "No input files/directories provided!"}
     }
 

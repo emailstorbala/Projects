@@ -1,7 +1,7 @@
 [user]
 	name = Balamurugan R
 	email = emailstorbala@gmail.com
-	signingkey = /home/balamurugan/.ssh/id_rsa.pub
+	signingkey = /home/balamurugan/.ssh/id_ed25519.pub
 [core]
 	editor = nvim
 [pull]
@@ -26,3 +26,6 @@
 	gpgsign = true
 [gpg]
 	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = /home/balamurugan/.config/git/allowed_signers
+	defaultKeyCommand = ssh-add -L
