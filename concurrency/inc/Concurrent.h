@@ -1,8 +1,9 @@
 #ifndef __CONCURRENT_H__
 #define __CONCURRENT_H__
-#include <cstdint>
-#include <iostream>
+#include <string>
+#include <string_view>
 #include <map>
+#include <cstdint>
 #include <mutex>
 
 class Concurrent {

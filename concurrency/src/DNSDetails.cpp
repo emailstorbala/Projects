@@ -7,8 +7,6 @@
 #include "DNSDetails.h"
 #include <fmt/core.h>
 #include <fmt/format.h>
-#include <fstream>
-#include <iostream>
 
 using std::string;
 
