@@ -8,7 +8,6 @@ else()
   set(CMAKE_CXX_FLAGS "-Wall -s -O3")
 endif()
 
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_executable(getcombinations getcombinations.cpp)
 target_link_libraries(getcombinations fmt boost_program_options)
