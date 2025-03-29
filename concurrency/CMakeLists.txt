@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9.1)
+cmake_minimum_required(VERSION 3.12.0)
 set(PROJECT_NAME "DnsLoadTest")
 project(${PROJECT_NAME})
 option(USE_CLANG "build application with clang" OFF)
