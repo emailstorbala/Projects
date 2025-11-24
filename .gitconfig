@@ -8,7 +8,8 @@
 	rebase = false
 [diff]
 	prompt = false
-	tool = vimdiff
+	tool = difftastic
+	external = difft --display side-by-side
 [difftool]
 	prompt = false
 	tool = vimdiff
@@ -29,3 +30,5 @@
 [gpg "ssh"]
 	allowedSignersFile = /home/balamurugan/.config/git/allowed_signers
 	defaultKeyCommand = ssh-add -L
+[pager]
+	diff = 

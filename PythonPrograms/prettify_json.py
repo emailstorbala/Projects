@@ -6,16 +6,25 @@ import json
 import os
 import sys
 
+
 def parse_args():
     """ Function to parse the program arguments """
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--infile", required=True,
-                        help="Input file in json format")
-    parser.add_argument("-o", "--outfile", default="out.json",
-                        help="Write pretty output to outfile")
-    parser.add_argument("-s", "--stdout", action="store_true",
-                        help="Flag to decide stdout/outfile for output")
+    group = parser.add_mutually_exclusive_group()
+    parser.add_argument(
+        "-i", "--infile", required=True,
+        help="Input file in json format"
+    )
+    group.add_argument(
+        "-o", "--outfile", default="out.json",
+        help="Write pretty output to outfile"
+    )
+    group.add_argument(
+        "-s", "--stdout", action="store_true",
+        help="Flag to decide stdout/outfile for output"
+    )
     return parser.parse_args()
+
 
 def prettify_json(args):
     """ Function to prettify the input json """
@@ -27,6 +36,7 @@ def prettify_json(args):
         else:
             with open(file=args.outfile, mode='w', encoding='utf-8') as out_file:
                 json.dump(obj=json_obj, fp=out_file, indent=4)
+
 
 def main():
     """ Main entrypoint function """
