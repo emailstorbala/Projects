@@ -4,6 +4,7 @@
 	signingkey = /home/balamurugan/.ssh/id_ed25519.pub
 [core]
 	editor = nvim
+	trustExitCode = true
 [pull]
 	rebase = false
 [diff]
@@ -16,9 +17,9 @@
 [merge]
 	prompt = false
 	tool = vimdiff
-[mergetool "vimdiff"]
+[mergetool]
 	prompt = false
-	path = nvim
+	path = vimdiff
 [color]
 	ui = auto
 [init]
