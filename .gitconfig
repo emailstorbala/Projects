@@ -9,7 +9,7 @@
 	rebase = false
 [diff]
 	prompt = false
-	tool = difftastic
+	tool = vimdiff
 	external = difft --display side-by-side
 [difftool]
 	prompt = false
